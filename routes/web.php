@@ -44,8 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         // Rute untuk menampilkan grafik nilai
         Route::get('/nilai/chart', [ChartController::class, 'showSiswaNilai'])->name('nilai.chart');
-        
-Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
+        Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
+        Route::post('/diskusi', [KomenController::class, 'store'])->name('komen.store');
      });
     
 
