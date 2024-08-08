@@ -9,17 +9,13 @@ class Mapel extends Model
 {
     use HasFactory;
 
-    protected $table = 'mapel';
+    protected $fillable = [
+        'nilai_id', 'name', 'nilai'
+    ];
 
-    protected $fillable = ['nama'];
-
-    // Data mata pelajaran yang statis
-    public static function staticMapels()
+    public function nilai()
     {
-        return [
-            'Berempati kepada orang lain',
-            'Pemahaman Agama/Kepercayaan',
-            'Mengutamakan persamaan dengan orang lain dan menghargai perbedaan'
-        ];
+        return $this->belongsTo(Nilai::class, 'nilai_id');
     }
 }
+

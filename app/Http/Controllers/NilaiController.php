@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Nilai;
+use App\Models\Mapel;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+
 
 
 class NilaiController extends Controller
 {
     public function index()
     {
-        $nilai = Nilai::with('user')->get();
-        
-        return view('nilai.index', compact('nilai'));
+        $nilai = Nilai::with('user', 'mapels')->get(); // Mengambil semua data nilai beserta relasi user dan mapel
+        return view('nilai.index', compact('nilai')); // Mengembalikan tampilan dengan data nilai
     }
     
+    //Membuat Nilai
     public function create()
     {
         $users = User::all();
@@ -27,20 +28,35 @@ class NilaiController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'nilai_mapel_1' => 'required|numeric',
-            'nilai_mapel_2' => 'required|numeric',
-            'nilai_mapel_3' => 'required|numeric',
             'nama_sekolah' => 'required',
             'alamat_sekolah' => 'required',
             'projek_1' => 'required',
             'projek_2' => 'required',
+            'mapel' => 'required|array',
+            'mapel.*.name' => 'required|string',
+            'mapel.*.nilai' => 'required|integer|min:1|max:10',
         ]);
-        
-        Nilai::create($request->all());
-        
-        return redirect()->route('nilai.index')->with('success', 'Nilai berhasil disimpan.');
-    }
 
+        $nilai = Nilai::create([
+            'user_id' => $request->user_id,
+            'nama_sekolah' => $request->nama_sekolah,
+            'alamat_sekolah' => $request->alamat_sekolah,
+            'projek_1' => $request->projek_1,
+            'projek_2' => $request->projek_2,
+        ]);
+
+        foreach ($request->mapel as $mapelData) {
+            Mapel::create([
+                'nilai_id' => $nilai->id,
+                'name' => $mapelData['name'],
+                'nilai' => $mapelData['nilai'],
+            ]);
+        }
+
+        return redirect()->route('nilai.index')->with('success', 'Nilai berhasil ditambahkan.');
+    }
+    
+    //Menghapus Nilai
     public function destroy($id)
     {
         $nilai = Nilai::findOrFail($id);
@@ -51,7 +67,7 @@ class NilaiController extends Controller
 
     public function edit($id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('mapels')->findOrFail($id);
         $users = User::all();
         return view('nilai.edit', compact('nilai', 'users'));
     }
@@ -60,21 +76,35 @@ class NilaiController extends Controller
 
     public function update(Request $request, $id)
     {
-        
-// Validasi input
-$request->validate([
-    // Aturan validasi
-]);
-
-// Temukan data Nilai berdasarkan ID
-$nilai = Nilai::findOrFail($id);
-
-// Perbarui data dengan data yang diterima dari permintaan
-$nilai->update($request->all());
-
-// Redirect dengan pesan sukses
-return redirect()->route('nilai.index')->with('success', 'Nilai berhasil diperbarui.');
-
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'nama_sekolah' => 'required|string|max:255',
+            'alamat_sekolah' => 'required|string|max:255',
+            'projek_1' => 'nullable|string',
+            'projek_2' => 'nullable|string',
+            'mapel.*.name' => 'required|string|max:255',
+            'mapel.*.nilai' => 'required|integer|min:1|max:10',
+        ]);
+    
+        $nilai = Nilai::findOrFail($id);
+    
+        // Update data utama nilai
+        $nilai->update([
+            'user_id' => $request->user_id,
+            'nama_sekolah' => $request->nama_sekolah,
+            'alamat_sekolah' => $request->alamat_sekolah,
+            'projek_1' => $request->projek_1,
+            'projek_2' => $request->projek_2,
+        ]);
+    
+        // Update data mapel
+        $nilai->mapels()->delete(); // Hapus semua mapel yang terkait dengan nilai ini
+    
+        foreach ($request->mapel as $mapelData) {
+            $nilai->mapels()->create($mapelData);
+        }
+    
+        return redirect()->route('nilai.index')->with('success', 'Nilai berhasil diperbarui.');
     }
     
 }
