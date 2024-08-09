@@ -1,86 +1,122 @@
-<x-app-layout title="welcome">
+<x-app-layout title="Chart">
     <div class="p-4 sm:ml-64">
-        <p class="mb-6 font-bold tracking-tigh text-lg  text-dark lg:text-3xl dark:text-gray-400">Selamat telah mengerjakan tugas yang telah diberikan, lihat nilai mu sekarang!</p>
-        
+        <div class="flex items-center justify-beetween mb-6">
+            <!-- Teks -->
+            <p class="font-bold tracking-tight text-lg text-dark lg:text-3xl dark:text-gray-400">
+                Hore kamu belajar dengan giat, ini nilai kamu !
+            </p>
+
+            <!-- Gambar -->
+            <img src="{{ asset('happy.png') }}" alt="Deskripsi Gambar" class="w-24 h-24 mr-4 rounded-full">
+        </div>
+
         <!-- Tampilkan informasi pengguna -->
-        <div class="w-full">
-
-            @foreach($chartData as $data)
+        <div class="w-full bg-white p-4 rounded-lg shadow-md">
             <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
-                <p>Nama Sekolah : {{ $data['nama_sekolah'] }}</p>
-                <p>Alamat Sekolah : {{ $data['alamat_sekolah'] }}</p>
+                <p><span class="font-bold">Nama Sekolah:</span> {{ $schoolData['nama_sekolah'] }}</p>
+                <p><span class="font-bold">Alamat Sekolah:</span> {{ $schoolData['alamat_sekolah'] }}</p>
             </div>
-            
 
-        @endforeach
-
-        
-           @auth
-               
-           @endauth
             @if($userData)
             <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
-                <p>Nama : {{ $userData['Nama'] }}</p>
-                <p>Kelas : {{ $userData['Kelas'] }}</p>
-                <p>Fase : A</p>
-                <p>Tahun Ajaran : 2023-2024</p>
+                <p><span class="font-bold">Nama:</span> {{ $userData['Nama'] }}</p>
+                <p><span class="font-bold">Kelas:</span> {{ $userData['Kelas'] }}</p>
+                <p><span class="font-bold">Fase:</span> A</p>
+                <p><span class="font-bold">Tahun Ajaran:</span> 2023-2024</p>
             </div>
             @endif
-            
-            <!-- Tampilkan data nilai -->
-            @foreach($chartData as $data)
-                <div id="chart"></div>
-                <div class="text-center ">
-                </div>
-                @endforeach
 
-                
+            <!-- Tampilkan data nilai dan grafik -->
+            <div class="overflow-hidden mt-6 mb-6">
+                <div id="chart" class="w-full h-96"></div>
+            </div>
 
-                @foreach($chartData as $data)
-                <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
-                   <ul>
-                    Projek 1 :
-                    <li class="mb-3 text-gray-500 dark:text-gray-400">
-                        {{ $data['projek_1'] }} 
+            <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
+                <ul>
+                    <li><span class="font-bold">Projek 1:</span>
+                        <p class="mb-3 text-gray-500 dark:text-gray-400">
+                            {{ $schoolData['projek_1'] }}
+                        </p>
                     </li>
-                   </ul>
-                   <ul>
-                    Projek 2 :
-                    <li class="mb-3 text-gray-500 dark:text-gray-400">
-                        {{ $data['projek_2'] }}
+                </ul>
+                <ul>
+                    <li><span class="font-bold">Projek 2:</span>
+                        <p class="mb-3 text-gray-500 dark:text-gray-400">
+                            {{ $schoolData['projek_2'] }}
+                        </p>
                     </li>
-                   </ul>
-                </div>
-             
-            @endforeach
-
-            
+                </ul>
+            </div>
         </div>
     </div>
 
-    <!-- Skrip JavaScript untuk membuat grafik dengan ApexCharts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @push('scripts')
     <script>
-        var options = {
-            chart: {
-                type: 'line'
-            },
-            series: [
-                @foreach($chartData as $data)
-                    {
-                        name: '{{ $data['label'] }}',
-                        data: [{{ $data['value1'] }}, {{ $data['value2'] }}, {{ $data['value3'] }}]
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                chart: {
+                    type: 'line',
+                    height: '100%',
+                    zoom: {
+                        enabled: true
+                    }
+                },
+                series: [{
+                    name: 'Nilai',
+                    data: @json($nilaiSeries)
+                }],
+                xaxis: {
+                    categories: @json($mapelLabels),
+                    title: {
+                        text: 'Mata Pelajaran',
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            color: '#000'
+                        }
                     },
-                @endforeach
-            ],
-            xaxis: {
-                categories: {!! json_encode(array_values($labels)) !!}
-            }
-         
+                    tickAmount: 10, // Jumlah ticks pada x-axis
+                    labels: {
+                        rotate: -45 // Memutar label x-axis jika perlu
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Nilai',
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            color: '#000'
+                        }
+                    },
+                    min: 0,
+                    max: 10,
+                    tickAmount: 5 // Jumlah ticks pada y-axis
+                },
+                colors: ['#FF1654'],
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return `Nilai: ${val}`;
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        fontSize: '12px',
+                        colors: ['#000']
+                    }
+                },
+                stroke: {
+                    curve: 'smooth', // Mengatur kurva garis untuk membuatnya halus
+                    width: 2 // Menentukan ketebalan garis
+                }
+            };
 
-        };
-
-        var chart = new ApexCharts(document.querySelector('#chart'), options);
-        chart.render();
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        });
     </script>
+    @endpush
 </x-app-layout>

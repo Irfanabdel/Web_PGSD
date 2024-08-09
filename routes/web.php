@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     
     Route::get('/nilai/chart', [ChartController::class, 'showChart'])->name('nilai.chart');
-
+    
 
     Route::middleware(['auth', 'verified'])->group(function () {
         // Rute untuk menampilkan grafik nilai

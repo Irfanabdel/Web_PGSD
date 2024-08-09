@@ -79,7 +79,7 @@
                                 <option value="">Pilih Nilai</option>
                                 ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
                               </select>`;
-            cell3.innerHTML = `<button type="button" onclick="removeMapelRow(this)" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900">Hapus</button>`;
+            cell3.innerHTML = `<button type="button" onclick="removeMapelRow(this)" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900"><i class="fas fa-trash-alt"></i> <!-- Font Awesome Trash Icon --></button>`;
         }
 
         function removeMapelRow(button) {

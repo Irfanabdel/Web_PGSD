@@ -38,7 +38,9 @@
                                 </select>
                             </td>
                             <td class="p-3">
-                                <button type="button" onclick="removeMapelRow(this)" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900">Hapus</button>
+                                <button type="button" onclick="removeMapelRow(this)" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-800 transition-colors">
+                                <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
+                                </button>
                             </td>
                         </tr>
                         @endforeach
