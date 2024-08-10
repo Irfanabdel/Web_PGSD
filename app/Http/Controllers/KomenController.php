@@ -34,4 +34,19 @@ class KomenController extends Controller
 
         return redirect()->route('komen.index');
     }
+
+    // Method untuk menghapus komentar
+    public function destroy($id)
+    {
+        $komen = Komen::findOrFail($id);
+
+        // Hapus file gambar jika ada
+        if ($komen->image) {
+            \Storage::disk('public')->delete($komen->image);
+        }
+
+        $komen->delete();
+
+        return redirect()->route('komen.index')->with('success', 'Komentar berhasil dihapus.');
+    }
 }

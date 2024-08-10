@@ -29,6 +29,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update-image', [ProfileController::class, 'updateImage'])->name('profile.updateImage'); // Rute untuk update gambar
+    Route::delete('/profile/delete-image', [ProfileController::class, 'deleteImage'])->name('profile.deleteImage'); // Rute untuk hapus gambar
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -50,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/nilai/chart', [ChartController::class, 'showSiswaNilai'])->name('nilai.chart');
         Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
         Route::post('/diskusi', [KomenController::class, 'store'])->name('komen.store');
+        Route::delete('/komen{id}', [KomenController::class, 'destroy'])->name('komen.destroy');
      });
     
 

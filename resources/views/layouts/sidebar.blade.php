@@ -18,13 +18,28 @@
                         <img src="{{asset('fwef.png')}}" class="h-14 me-3" alt="FlowBite Logo" />
                     </a>
             </div>
+
             <!-- User Menu -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 @auth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <!-- Menampilkan Foto Profil Pengguna -->
+                            <div class="flex items-center">
+                                @if (auth()->user()->image)
+                                <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Profile Image" class="w-8 h-8 rounded-full border border-gray-300 dark:border-gray-600 object-cover">
+                                @else
+                                <div class="w-8 h-8 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center bg-gray-200 dark:bg-gray-800">
+                                    <!-- Ikon Orang Kosong -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9A3.75 3.75 0 1112 5.25 3.75 3.75 0 0115.75 9zM4.5 18.75A6.75 6.75 0 0112 12a6.75 6.75 0 017.5 6.75" />
+                                    </svg>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="ms-1">{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -43,7 +58,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                           this.closest('form').submit();">
+                                   this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -51,12 +66,12 @@
                 </x-dropdown>
                 @endauth
             </div>
+
         </div>
     </div>
 </nav>
+
 <!-- Sidebar Menu -->
-
-
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
@@ -122,10 +137,6 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Ruang Diskusi</span>
                 </a>
             </li>
-
-
-
-
             @endauth
 
 

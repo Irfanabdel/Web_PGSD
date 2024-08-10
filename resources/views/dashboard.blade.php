@@ -67,10 +67,4 @@
     </div>
   </div>
 
-  <!-- Menampilkan jumlah pengguna 
-  <div class="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold text-gray-900">Jumlah Pengguna</h2>
-    <p class="text-2xl font-bold text-gray-700 mt-2">{{ $userCount }}</p>
-  </div>-->
-
 </x-app-layout>

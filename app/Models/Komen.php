@@ -19,5 +19,3 @@ class Komen extends Model
         'image',
     ];
 }
-
-
