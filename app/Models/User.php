@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,9 +21,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'kelas', // Tambahkan atribut kelas di sini
-        'nama_sekolah', // Tambahkan atribut nama_sekolah di sini
-        'nama_siswa', // Tambahkan atribut nama_siswa di sini
+        'kelas', // Menambahkan atribut kelas
+        'school_name', // Menambahkan atribut nama_sekolah
+        'image', // Menambahkan atribut image untuk menyimpan path gambar
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -53,10 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-// Metode untuk memeriksa peran pengguna
-public function checkRole($role)
-{
-    return $this->role === $role;
-}
-
+    // Metode untuk memeriksa peran pengguna
+    public function checkRole($role)
+    {
+        return $this->role === $role;
+    }
 }

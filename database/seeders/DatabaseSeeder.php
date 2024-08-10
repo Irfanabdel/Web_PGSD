@@ -16,30 +16,22 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'guru',
+                'name' => 'Guru',
                 'email' => 'guru@gmail.com',
                 'role' => 'guru',
                 'password' => Hash::make('12345678'),
+                'token' => 'GURU123456TOKEN', //Token tetap guru
+                'school_name' => 'SD Mekar Arum',
             ],
+           
             [
-                'name' => 'siswa A',
-                'email' => 'siswaA@gmail.com',
-                'role' => 'siswa',
-                'password' => Hash::make('12345678'),
-            ],
-            [
-                'name' => 'kepsek',
+                'name' => 'Kepala Sekolah',
                 'email' => 'kepsek@gmail.com',
                 'role' => 'kepsek', 
                 'password' => Hash::make('12345678'),
+                'token' => 'KEPSEK28456TOKEN', //Memberikan Nilai Null
+                'school_name' => 'SD Mekar Arum',
             ]
-        ]);
-        DB::table('komen')->insert([
-            [
-                'title' => 'Forum Diskusi Bersama',
-            ],
-           
-        ]);
-        
+        ]);      
     }
 }

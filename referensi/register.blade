@@ -3,73 +3,70 @@
         @csrf
 
         <!-- Name -->
-        <div class="mb-4">
+        <div>
             <x-input-label for="name" :value="__('Nama')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Role -->
-        <div class="mb-4">
-            <x-input-label for="role" :value="__('Role')" />
-            <select name="role" id="role" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" onchange="toggleAdditionalFields()">
+        <div class="form-group max-w-sm mx-auto mt-4">
+            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+            <select name="role" id="role" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onchange="toggleAdditionalFields()">
                 <option value="siswa">Siswa</option>
                 <option value="guru">Guru</option>
+                <option value="kepsek">Kepala Sekolah</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
-        <!-- Token (Conditional) -->
-        <div id="additional-fields" class="hidden mb-4">
-            <x-input-label for="token" :value="__('Masukkan Token')" />
-            <x-text-input id="token" class="block mt-1 w-full" type="text" name="token" :value="old('token')" />
-            <x-input-error :messages="$errors->get('token')" class="mt-2" />
-        </div>
-
-        <!-- School Name -->
-        <div class="mb-4">
-            <x-input-label for="school_name" :value="__('Nama Sekolah')" />
-            <x-text-input id="school_name" class="block mt-1 w-full" type="text" name="school_name" :value="old('school_name')" required />
-            <x-input-error :messages="$errors->get('school_name')" class="mt-2" />
-        </div>
-
         <!-- Kelas -->
-        <div class="mb-4">
-            <x-input-label for="kelas" :value="__('Kelas')" />
-            <select name="kelas" id="kelas" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
-                <option value="kelas 2">Kelas 2</option>
-                <option value="kelas 3">Kelas 3</option>
+        <div class="form-group max-w-sm mx-auto mt-4">
+            <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
+            <select name="kelas" id="kelas" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="kelas 2A">Kelas 2A</option>
+                <option value="kelas 2B">Kelas 2B</option>
+                <option value="kelas 2C">Kelas 2C</option>
             </select>
             <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
         </div>
 
+        <!-- Token (Conditional) -->
+        <div id="additional-fields" class="hidden mt-4">
+            <div>
+                <x-input-label for="token" :value="__('Masukkan Token')" />
+                <x-text-input id="token" class="block mt-1 w-full" type="text" name="token" :value="old('token')" />
+                <x-input-error :messages="$errors->get('token')" class="mt-2" />
+            </div>
+        </div>
+
         <!-- Email Address -->
-        <div class="mb-4">
+        <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mb-4">
+        <div class="mt-4">
             <x-input-label for="password" :value="__('Kata sandi')" />
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mb-4">
+        <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Konfirmasi Kata sandi')" />
             <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-between">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" href="{{ route('login') }}">
-                {{ __('Sudah memiliki akun?') }}
+        <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                {{ __('Sudah memilik akun?') }}
             </a>
 
-            <x-primary-button>
+            <x-primary-button class="ms-4">
                 {{ __('Daftar') }}
             </x-primary-button>
         </div>

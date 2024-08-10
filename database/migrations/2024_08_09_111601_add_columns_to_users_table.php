@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilais', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->text('projek_1');
-            $table->text('projek_2');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('name');
+            $table->string('school_name')->nullable()->after('name');
         });
-        
     }
 
     /**
@@ -26,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilais');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('image');
+            $table->dropColumn('image');
+        });
     }
 };

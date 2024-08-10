@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -31,22 +32,46 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'kelas' => ['required', 'string'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required|string',
+            'kelas' => 'required_if:role,siswa|string|max:255',
+            'token' => 'required_if:role,guru|string|nullable',
+            'school_name' => ['required', 'string'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4048', // Validasi untuk image (opsional)
         ]);
 
+        if ($request->role === 'guru') {
+            // Token tetap yang diharapkan
+            $expectedToken = 'GURU123456TOKEN';
+
+            // Validasi token
+            if ($request->token !== $expectedToken) {
+                return redirect()->back()->withErrors(['token' => 'Token tidak valid'])->withInput();
+            }
+        }
+
+        // Proses penyimpanan image (jika ada)
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+        
         $user = User::create([
             'name' => $request->name,
-            'kelas' => $request->kelas,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'school_name' => $request->school_name,
+            'kelas' => $request->kelas,
+            'token' => $request->role === 'guru' ? $request->token : null, //hanya simpan token jika role adalah guru
+            'image' => $imagePath, // Simpan path gambar jika ada
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('dashboard')->with('status', 'Pendaftaran Berhasil');
     }
 }

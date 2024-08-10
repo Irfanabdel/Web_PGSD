@@ -1,0 +1,17 @@
+.custom-size {
+    width: 800px;
+    /* Atur lebar sesuai kebutuhan */
+  }
+  .box-container {
+    display: flex;
+    gap: 1rem; /* Spasi antara kotak */
+    margin-top: 1rem;
+  }
+  .box {
+    flex: 1; /* Membuat kotak memiliki lebar yang sama */
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
