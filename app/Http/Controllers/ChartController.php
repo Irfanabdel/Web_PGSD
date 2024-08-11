@@ -20,8 +20,8 @@ class ChartController extends Controller
         $nilaiData = Nilai::with('mapels')->where('user_id', $user_id)->first();
 
         if (!$nilaiData) {
-            // Jika data nilai tidak ditemukan, redirect atau tampilkan pesan
-            return redirect('/dashboard')->with('error', 'Data nilai tidak ditemukan');
+            // Jika data nilai tidak ditemukan, arahkan ke halaman 'nilai.empty'
+            return redirect()->route('nilai.empty')->with('error', 'Data nilai tidak ditemukan');
         }
 
         // Persiapkan array untuk data chart nilai

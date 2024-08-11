@@ -10,7 +10,7 @@ class Nilai extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'mapel', 'nilai', 'nama_sekolah', 'alamat_sekolah', 'projek_1', 'projek_2'
+        'user_id', 'mapel', 'nilai', 'projek_1', 'projek_2'
     ];
 
     public function user()
@@ -21,6 +21,12 @@ class Nilai extends Model
     public function mapels()
     {
         return $this->hasMany(Mapel::class, 'nilai_id');
+    }
+
+    // Menambahkan akses untuk school_name dari relasi user
+    public function getSchoolNameAttribute()
+    {
+        return $this->user ? $this->user->school_name : null;
     }
 }
 

@@ -14,13 +14,25 @@ class NilaiController extends Controller
     public function index()
     {
         $nilai = Nilai::with('user', 'mapels')->get(); // Mengambil semua data nilai beserta relasi user dan mapel
+        // Cek apakah ada data nilai yang tersedia
+        if ($nilai->isEmpty()) {
+            // Jika tidak ada data, arahkan ke halaman 'nilai.empty'
+            return redirect()->route('nilai.empty');
+        }
         return view('nilai.index', compact('nilai')); // Mengembalikan tampilan dengan data nilai
     }
     
+    // Menampilkan halaman nilai kosong
+    public function empty()
+    {
+        return view('nilai.empty');
+    }
+
     //Membuat Nilai
     public function create()
     {
-        $users = User::all();
+        // Ambil hanya pengguna dengan role 'siswa'
+        $users = User::where('role', 'siswa')->get();
         return view('nilai.create', compact('users'));
     }
 
@@ -28,8 +40,6 @@ class NilaiController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'nama_sekolah' => 'required',
-            'alamat_sekolah' => 'required',
             'projek_1' => 'required',
             'projek_2' => 'required',
             'mapel' => 'required|array',
@@ -39,8 +49,6 @@ class NilaiController extends Controller
 
         $nilai = Nilai::create([
             'user_id' => $request->user_id,
-            'nama_sekolah' => $request->nama_sekolah,
-            'alamat_sekolah' => $request->alamat_sekolah,
             'projek_1' => $request->projek_1,
             'projek_2' => $request->projek_2,
         ]);
@@ -78,8 +86,6 @@ class NilaiController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'nama_sekolah' => 'required|string|max:255',
-            'alamat_sekolah' => 'required|string|max:255',
             'projek_1' => 'nullable|string',
             'projek_2' => 'nullable|string',
             'mapel.*.name' => 'required|string|max:255',
@@ -91,8 +97,6 @@ class NilaiController extends Controller
         // Update data utama nilai
         $nilai->update([
             'user_id' => $request->user_id,
-            'nama_sekolah' => $request->nama_sekolah,
-            'alamat_sekolah' => $request->alamat_sekolah,
             'projek_1' => $request->projek_1,
             'projek_2' => $request->projek_2,
         ]);

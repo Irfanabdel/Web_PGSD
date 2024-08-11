@@ -65,11 +65,11 @@
         </div>
 
         <div class="flex items-center justify-between">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                 {{ __('Sudah memiliki akun?') }}
             </a>
 
-            <x-primary-button>
+            <x-primary-button class="ms-3 bg-red-500 hover:bg-red-800">
                 {{ __('Daftar') }}
             </x-primary-button>
         </div>

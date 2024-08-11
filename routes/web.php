@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Rute untuk guru
     Route::middleware(CheckRole::class . ':guru')->group(function () {
         Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
         Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
@@ -43,32 +44,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/nilai/{id}/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
         Route::put('/nilai/{id}', [NilaiController::class, 'update'])->name('nilai.update');
     });
-    
-    Route::get('/nilai/chart', [ChartController::class, 'showChart'])->name('nilai.chart');
-    
 
-    Route::middleware(['auth', 'verified'])->group(function () {
-        // Rute untuk menampilkan grafik nilai
-        Route::get('/nilai/chart', [ChartController::class, 'showSiswaNilai'])->name('nilai.chart');
-        Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
-        Route::post('/diskusi', [KomenController::class, 'store'])->name('komen.store');
-        Route::delete('/komen{id}', [KomenController::class, 'destroy'])->name('komen.destroy');
-     });
-    
+    // Rute untuk semua pengguna
+    Route::get('/nilai/chart', [ChartController::class, 'showChart'])->name('nilai.chart');
+    //Rute untuk nilai kosong
+    Route::get('/nilai/empty', [NilaiController::class, 'empty'])->name('nilai.empty');
+    // Rute untuk menampilkan grafik nilai
+    Route::get('/nilai/chart', [ChartController::class, 'showSiswaNilai'])->name('nilai.chart');
+    // Rute untuk diskusi
+    Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
+    Route::post('/diskusi', [KomenController::class, 'store'])->name('komen.store');
+    Route::delete('/komen{id}', [KomenController::class, 'destroy'])->name('komen.destroy');
+
 
     Route::get('/nilai/dashboard', function () {
         return view('dashboard');
     })->name('nilai.dashboard');
-
-    Route::get('/nilai/komen', function () {
-        return view('nilai.komen');
-    })->name('nilai.komen');
 });
 
-
-
-
-
-
 // Routes yang tidak memerlukan autentikasi
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

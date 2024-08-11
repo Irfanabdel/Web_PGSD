@@ -31,18 +31,34 @@
             </div>
             @endif
 
-            <!-- Tombol Hapus Komen -->
+            <!-- Tambahkan link ke file CSS -->
+            <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
             @if (auth()->user()->role === 'guru')
-            <form action="{{ route('komen.destroy', $item->id) }}" method="POST" class="absolute top-4 right-4">
+            <form action="{{ route('komen.destroy', $item->id) }}" method="POST" class="absolute top-4 right-4" onsubmit="return confirmDelete(event)">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="text-red-600 hover:text-red-800" title="Hapus Diskusi">
+                <button type="submit" class="tooltip text-red-600 hover:text-red-800">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6v12m6-12v12m-3-12v12m-7 4h14a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v16a1 1 0 001 1z" />
                     </svg>
+                    <span class="tooltiptext">Hapus</span>
                 </button>
             </form>
             @endif
+
+            <!-- Tambahkan JavaScript untuk konfirmasi -->
+            <script>
+                function confirmDelete(event) {
+                    event.preventDefault(); // Mencegah form submit secara default
+
+                    const confirmed = confirm("Apakah Anda yakin ingin menghapus diskusi ini?");
+
+                    if (confirmed) {
+                        event.target.submit(); // Melanjutkan dengan submit jika pengguna mengonfirmasi
+                    }
+                }
+            </script>
 
             <!-- Menampilkan komentar terkait item Komen -->
             <livewire:comments :model="$item" />

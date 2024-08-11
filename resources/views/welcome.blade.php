@@ -1,14 +1,14 @@
 <x-app-layout title="welcome">
 
-<section class="flex items-center justify-center rounded bg-white dark:bg-gray-800">
+<section class="flex items-center justify-center rounded bg-white">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16">
       <div class="flex flex-col justify-center">
-          <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Projek Penguatan Profil Pelajar Pancasila</h1>
-          <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Proyek penguatan profil pelajar Pancasila adalah inisiatif yang bertujuan untuk mengembangkan karakter dan kompetensi pelajar Indonesia sesuai dengan nilai-nilai Pancasila. Profil pelajar Pancasila merujuk pada gambaran atau deskripsi tentang bagaimana seharusnya peserta didik yang dihasilkan oleh sistem pendidikan Indonesia, yang memiliki kompetensi, karakter, dan perilaku yang sesuai dengan nilai-nilai Pancasila</p>
+          <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Projek Penguatan Profil Pelajar Pancasila</h1>
+          <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl">Proyek penguatan profil pelajar Pancasila adalah inisiatif yang bertujuan untuk mengembangkan karakter dan kompetensi pelajar Indonesia sesuai dengan nilai-nilai Pancasila. Profil pelajar Pancasila merujuk pada gambaran atau deskripsi tentang bagaimana seharusnya peserta didik yang dihasilkan oleh sistem pendidikan Indonesia, yang memiliki kompetensi, karakter, dan perilaku yang sesuai dengan nilai-nilai Pancasila</p>
           
           </a>
           <div class=" space-y-4 sm:flex-row sm:space-y-0">
-            <a href="{{route ('login') }}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+            <a href="{{route ('login') }}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300">
               Masuk
               <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
@@ -23,7 +23,7 @@
             </a>
         </div>
       </div>
-          <img srcset="{{asset('garuda.png')}}" class="w-full h-auto max-w-sm rounded-lg mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16" alt="image description">
+          <img srcset="{{asset('/image/garuda.png')}}" class="w-full h-auto max-w-sm rounded-lg mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16" alt="image description">
       </div>
   </div>
 </section>

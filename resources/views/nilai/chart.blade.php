@@ -1,24 +1,19 @@
 <x-app-layout title="Chart">
     <div class="p-4 sm:ml-64">
-        <div class="flex items-center justify-beetween mb-6">
+        <div class="flex items-center justify-between mb-6">
             <!-- Teks -->
-            <p class="font-bold tracking-tight text-lg text-dark lg:text-3xl dark:text-gray-400">
-                Hore kamu belajar dengan giat, ini nilai kamu !
+            <p class="font-bold tracking-tight text-lg text-dark lg:text-3xl">
+                Hore kamu belajar dengan giat, ini nilai kamu!
             </p>
 
             <!-- Gambar -->
-            <img src="{{ asset('happy.png') }}" alt="Deskripsi Gambar" class="w-24 h-24 mr-4 rounded-full">
+            <img src="{{ asset('/image/happy.png') }}" alt="Deskripsi Gambar" class="w-24 h-24 mr-4 rounded-full">
         </div>
 
         <!-- Tampilkan informasi pengguna -->
         <div class="w-full bg-white p-4 rounded-lg shadow-md">
-            <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
-                <p><span class="font-bold">Nama Sekolah:</span> {{ $schoolData['nama_sekolah'] }}</p>
-                <p><span class="font-bold">Alamat Sekolah:</span> {{ $schoolData['alamat_sekolah'] }}</p>
-            </div>
-
             @if($userData)
-            <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
+            <div class="mb-6 text-lg font-normal text-dark lg:text-xl">
                 <p><span class="font-bold">Nama:</span> {{ $userData['Nama'] }}</p>
                 <p><span class="font-bold">Kelas:</span> {{ $userData['Kelas'] }}</p>
                 <p><span class="font-bold">Fase:</span> A</p>
@@ -27,21 +22,27 @@
             @endif
 
             <!-- Tampilkan data nilai dan grafik -->
+            @if(!empty($nilaiSeries) && !empty($mapelLabels))
             <div class="overflow-hidden mt-6 mb-6">
                 <div id="chart" class="w-full h-96"></div>
             </div>
+            @else
+            <div class="text-lg font-normal text-dark lg:text-xl">
+                <p>Tunggu ya, nilai kamu belum ada.</p>
+            </div>
+            @endif
 
-            <div class="mb-6 text-lg font-normal text-dark lg:text-xl dark:text-gray-400">
+            <div class="mb-6 text-lg font-normal text-dark lg:text-xl">
                 <ul>
                     <li><span class="font-bold">Projek 1:</span>
-                        <p class="mb-3 text-gray-500 dark:text-gray-400">
+                        <p class="mb-3 text-gray-500">
                             {{ $schoolData['projek_1'] }}
                         </p>
                     </li>
                 </ul>
                 <ul>
                     <li><span class="font-bold">Projek 2:</span>
-                        <p class="mb-3 text-gray-500 dark:text-gray-400">
+                        <p class="mb-3 text-gray-500">
                             {{ $schoolData['projek_2'] }}
                         </p>
                     </li>
@@ -50,7 +51,9 @@
         </div>
     </div>
 
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @push('scripts')
+    @if(!empty($nilaiSeries) && !empty($mapelLabels))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
@@ -118,5 +121,6 @@
             chart.render();
         });
     </script>
+    @endif
     @endpush
 </x-app-layout>

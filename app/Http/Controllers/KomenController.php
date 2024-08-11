@@ -10,7 +10,7 @@ class KomenController extends Controller
     public function index()
     {
         $komen = Komen::all();
-        return view('nilai.komen', compact('komen'));
+        return view('komen', compact('komen'));
     }
 
     public function store(Request $request)
