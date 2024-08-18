@@ -45,7 +45,7 @@ class ProfileController extends Controller
     public function updateImage(Request $request): RedirectResponse
     {
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $user = Auth::user();
