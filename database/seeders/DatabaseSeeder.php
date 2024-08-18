@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'guru@gmail.com',
                 'role' => 'guru',
                 'password' => Hash::make('12345678'),
-                'token' => 'GURU123456TOKEN', //Token tetap guru
+                'token' => 'Guru123', //Token tetap guru
                 'school_name' => 'SD Mekar Arum',
             ],
            

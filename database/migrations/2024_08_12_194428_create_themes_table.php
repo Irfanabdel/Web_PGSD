@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mapels', function (Blueprint $table) {
+        Schema::create('themes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nilai_id')->constrained('nilais')->onDelete('cascade');
-            $table->string('name');
-            $table->integer('nilai');
+            $table->string('title');
+            $table->json('dimensions'); // Simpan dimensi sebagai JSON
+            $table->string('project1'); // Tambahkan kolom untuk proyek 1
+            $table->string('project2'); // Tambahkan kolom untuk proyek 2
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mapels');
+        Schema::dropIfExists('themes');
     }
 };

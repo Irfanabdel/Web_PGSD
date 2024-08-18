@@ -9,7 +9,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userCount = User::count();
-        return view('dashboard', ['userCount' => $userCount]);
+        // Menghitung jumlah guru dan siswa
+        $jumlahGuru = User::where('role', 'guru')->count();
+        $jumlahSiswa = User::where('role', 'siswa')->count();
+
+        // Mengembalikan tampilan dengan data jumlah
+        return view('dashboard', compact('jumlahGuru', 'jumlahSiswa'));
     }
 }

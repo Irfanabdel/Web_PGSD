@@ -26,7 +26,14 @@
         <!-- Nama Sekolah -->
         <div>
             <x-input-label for="school_name" :value="__('Nama Sekolah')" />
-            <x-text-input id="school_name" name="school_name" type="text" class="mt-1 block w-full" :value="old('school_name', $user->school_name)" required autocomplete="school_name" />
+            <select name="school_name" id="school_name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                <!-- Menampilkan kelas lama yang sudah dipilih -->
+                <option value="{{ $user->school_name }}" selected>{{ $user->school_name }}</option>
+                <!-- Opsi kelas lainnya -->
+                <option value="SD A" {{ old('school_name') == 'SD A' ? 'selected' : '' }}>SD A</option>
+                <option value="SD B" {{ old('school_name') == 'SD B' ? 'selected' : '' }}>SD B</option>
+                <option value="SD C" {{ old('school_name') == 'SD C' ? 'selected' : '' }}>SD C</option>
+            </select>
             <x-input-error class="mt-2" :messages="$errors->get('school_name')" />
         </div>
 
@@ -37,8 +44,12 @@
                 <!-- Menampilkan kelas lama yang sudah dipilih -->
                 <option value="{{ $user->kelas }}" selected>{{ $user->kelas }}</option>
                 <!-- Opsi kelas lainnya -->
-                <option value="kelas 2" {{ old('kelas') == 'kelas 2' ? 'selected' : '' }}>Kelas 2</option>
-                <option value="kelas 3" {{ old('kelas') == 'kelas 3' ? 'selected' : '' }}>Kelas 3</option>
+                <option value="1" {{ old('kelas') == '1' ? 'selected' : '' }}>1</option>
+                <option value="2" {{ old('kelas') == '2' ? 'selected' : '' }}>2</option>
+                <option value="3" {{ old('kelas') == '3' ? 'selected' : '' }}>3</option>
+                <option value="4" {{ old('kelas') == '4' ? 'selected' : '' }}>4</option>
+                <option value="5" {{ old('kelas') == '5' ? 'selected' : '' }}>5</option>
+                <option value="6" {{ old('kelas') == '6' ? 'selected' : '' }}>6</option>
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('kelas')" />
         </div>

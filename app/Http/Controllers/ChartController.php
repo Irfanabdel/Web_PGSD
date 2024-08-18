@@ -2,60 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Nilai;
-use App\Models\Mapel;
-use Illuminate\Support\Facades\Auth;
-
+use App\Models\Grade;
+use App\Models\Theme;
 
 class ChartController extends Controller
 {
-    public function showSiswaNilai()
+    /**
+     * Menampilkan halaman chart dengan data asesmen.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showChart()
     {
-        // Ambil ID pengguna yang sedang login
-        $user_id = Auth::id();
+        // Ambil data pengguna yang aktif
+        $user = auth()->user();
 
-        // Ambil data nilai berdasarkan ID pengguna yang sedang login
-        $nilaiData = Nilai::with('mapels')->where('user_id', $user_id)->first();
+        // Ambil data nilai siswa untuk pengguna yang aktif dengan tema terkait
+        $grades = Grade::where('user_id', $user->id)
+            ->with('theme') // Pastikan relasi ini ada
+            ->get();
 
-        if (!$nilaiData) {
-            // Jika data nilai tidak ditemukan, arahkan ke halaman 'nilai.empty'
-            return redirect()->route('nilai.empty')->with('error', 'Data nilai tidak ditemukan');
+        // Data untuk view
+        $data = [];
+
+        // Pemetaan nilai ke kategori BB, MB, BSH, SB
+        $assessmentMap = [
+            1 => 'BB',
+            2 => 'MB',
+            3 => 'BSH',
+            4 => 'SB',
+        ];
+
+        // Proses data untuk grafik
+        foreach ($grades as $grade) {
+            $theme = $grade->theme;
+            $dimensions = explode("<br>", $theme->dimensions_text);
+            $assessments = is_array($grade->assessments) ? $grade->assessments : json_decode($grade->assessments, true);
+
+            $dimensionLabels = $dimensions;
+            $assessmentData = [];
+
+            foreach ($dimensions as $index => $dimension) {
+                $assessmentData[] = $assessmentMap[$assessments[$index] ?? null] ?? 'Unknown';
+            }
+
+            $data[] = [
+                'themeTitle' => $theme->title,
+                'dimensionLabels' => $dimensionLabels,
+                'assessmentData' => $assessmentData,
+                'project1' => $theme->project1,
+                'project2' => $theme->project2,
+            ];
         }
 
-        // Persiapkan array untuk data chart nilai
-        $chartData = [];
-        $nilaiSeries = [];
-        $mapelLabels = [];
-
-        // Loop melalui data mapel untuk mendapatkan nilai dan label mapel
-        foreach ($nilaiData->mapels as $mapel) {
-            $nilaiSeries[] = $mapel->nilai;
-            $mapelLabels[] = $mapel->name;
-        }
-
-        // Ambil data user (pengguna)
-        $user = Auth::user();
-
-        // Inisialisasi $userData
+        // Data pengguna
         $userData = [
             'Nama' => $user->name,
-            'Kelas' => $user->kelas, // pastikan 'kelas' adalah atribut yang valid pada model User
+            'school_name' => $user->school_name,
+            'Kelas' => $user->kelas,
         ];
 
-        // Ambil informasi sekolah dan proyek
-        $schoolData = [
-            'nama_sekolah' => $nilaiData->nama_sekolah,
-            'alamat_sekolah' => $nilaiData->alamat_sekolah,
-            'projek_1' => $nilaiData->projek_1,
-            'projek_2' => $nilaiData->projek_2,
-        ];
-
-        // Debugging data
-        #dd(compact('userData', 'schoolData', 'nilaiSeries', 'mapelLabels'));
-
-        // Kembalikan view dengan data yang diperlukan untuk chart
-        return view('nilai.chart', compact('userData', 'schoolData', 'nilaiSeries', 'mapelLabels'));
+        // Kirim data ke view
+        return view('grades.chart', [
+            'userData' => $userData,
+            'data' => $data
+        ]);
     }
 }

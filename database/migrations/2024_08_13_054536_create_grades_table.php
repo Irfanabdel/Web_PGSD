@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilais', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->text('projek_1');
-            $table->text('projek_2');
+            $table->foreignId('theme_id')->constrained()->onDelete('cascade');
+            $table->json('assessments'); // Menyimpan data nilai dalam format JSON
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilais');
+        Schema::dropIfExists('grades');
     }
 };

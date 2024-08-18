@@ -23,17 +23,17 @@
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 80px;
-  background-color: #d1d5db;
-  color: #333;
+  width: 70px; /* Menyesuaikan lebar tooltip */
+  background-color: #333; /* Warna latar belakang gelap */
+  color: #fff; /* Warna teks putih untuk kontras */
   text-align: center;
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 8px 12px; /* Menambah padding untuk ukuran yang lebih besar */
   position: absolute;
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -40px;
+  margin-left: -60px; /* Menyesuaikan margin untuk pusat tooltip */
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -41,4 +41,29 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+/* CSS untuk check box */
+.form-checkbox {
+  width: 1rem; /* Ukuran checkbox */
+  height: 1rem; /* Ukuran checkbox */
+  accent-color: #facc15; /* Warna kuning untuk checkbox */
+  border-radius: 0.25rem; /* Membuat checkbox lebih bulat */
+  border: 2px solid #facc15; /* Border berwarna kuning */
+}
+
+.form-checkbox:checked {
+  background-color: #facc15; /* Warna latar belakang saat checkbox dicentang */
+  border-color: #facc15; /* Warna border saat checkbox dicentang */
+}
+
+.form-checkbox:focus {
+  outline: none; /* Menghapus outline default saat fokus */
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.5); /* Menambahkan efek focus dengan warna kuning */
+}
+
+/* Sumbu x grafik */
+.wrap-text {
+  white-space: normal; /* Allows text to wrap */
+  word-break: break-word; /* Ensures long words break and wrap */
 }

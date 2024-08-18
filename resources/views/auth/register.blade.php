@@ -29,7 +29,11 @@
         <!-- School Name -->
         <div class="mb-4">
             <x-input-label for="school_name" :value="__('Nama Sekolah')" />
-            <x-text-input id="school_name" class="block mt-1 w-full" type="text" name="school_name" :value="old('school_name')" required />
+            <select name="school_name" id="school_name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                <option value="SD A">SD A</option>
+                <option value="SD B">SD B</option>
+                <option value="SD C">SD C</option>
+            </select>
             <x-input-error :messages="$errors->get('school_name')" class="mt-2" />
         </div>
 
@@ -37,8 +41,12 @@
         <div class="mb-4">
             <x-input-label for="kelas" :value="__('Kelas')" />
             <select name="kelas" id="kelas" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
-                <option value="kelas 2">Kelas 2</option>
-                <option value="kelas 3">Kelas 3</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
             </select>
             <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
         </div>

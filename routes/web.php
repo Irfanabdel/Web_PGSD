@@ -4,13 +4,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\NilaiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChartController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\KomenController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\GradeController;
 
 // Route untuk halaman selamat datang
 Route::get('/', function () {
@@ -37,29 +36,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Rute untuk guru
     Route::middleware(CheckRole::class . ':guru')->group(function () {
-        Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai.index');
-        Route::get('/nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
-        Route::post('/nilai/store', [NilaiController::class, 'store'])->name('nilai.store');
-        Route::delete('/nilai/{id}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
-        Route::get('/nilai/{id}/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
-        Route::put('/nilai/{id}', [NilaiController::class, 'update'])->name('nilai.update');
+        Route::prefix('themes')->group(function () {
+            Route::get('/', [ThemeController::class, 'index'])->name('themes.index');
+            Route::get('create', [ThemeController::class, 'create'])->name('themes.create');
+            Route::post('store', [ThemeController::class, 'store'])->name('themes.store');
+            Route::get('{theme}/edit', [ThemeController::class, 'edit'])->name('themes.edit');
+            Route::put('{theme}', [ThemeController::class, 'update'])->name('themes.update');
+            Route::delete('{theme}', [ThemeController::class, 'destroy'])->name('themes.destroy');
+        });
+
+        // Rute untuk grade
+        Route::prefix('grades')->group(function () {
+            Route::get('/', [GradeController::class, 'index'])->name('grades.index');
+            Route::get('create', [GradeController::class, 'create'])->name('grades.create');
+            Route::post('store', [GradeController::class, 'store'])->name('grades.store');
+            Route::get('{grade}/edit', [GradeController::class, 'edit'])->name('grades.edit');
+            Route::put('{grade}', [GradeController::class, 'update'])->name('grades.update');
+            Route::delete('{grade}', [GradeController::class, 'destroy'])->name('grades.destroy');
+        });
     });
 
-    // Rute untuk semua pengguna
-    Route::get('/nilai/chart', [ChartController::class, 'showChart'])->name('nilai.chart');
-    //Rute untuk nilai kosong
-    Route::get('/nilai/empty', [NilaiController::class, 'empty'])->name('nilai.empty');
-    // Rute untuk menampilkan grafik nilai
-    Route::get('/nilai/chart', [ChartController::class, 'showSiswaNilai'])->name('nilai.chart');
+    // Rute untuk menampilkan halaman chart
+Route::get('/grades/chart', [ChartController::class, 'showChart'])->name('grades.chart');
+
     // Rute untuk diskusi
     Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');
     Route::post('/diskusi', [KomenController::class, 'store'])->name('komen.store');
     Route::delete('/komen{id}', [KomenController::class, 'destroy'])->name('komen.destroy');
-
-
-    Route::get('/nilai/dashboard', function () {
-        return view('dashboard');
-    })->name('nilai.dashboard');
 });
 
 // Routes yang tidak memerlukan autentikasi

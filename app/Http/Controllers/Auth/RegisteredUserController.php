@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
 
         if ($request->role === 'guru') {
             // Token tetap yang diharapkan
-            $expectedToken = 'GURU123456TOKEN';
+            $expectedToken = 'Guru123';
 
             // Validasi token
             if ($request->token !== $expectedToken) {
