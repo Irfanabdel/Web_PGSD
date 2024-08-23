@@ -1,5 +1,5 @@
 <x-app-layout title="welcome">
-  <div class="p-4 sm:ml-64">
+  <div class="p-6 sm:ml-64 pt-8">
     <h1 class="mb-4 text-3xl font-extrabold tracking-tight leading-none text-black md:text-4xl lg:text-5xl text-center">
       Selamat Datang di E-Learning P5
     </h1>
@@ -9,12 +9,13 @@
 
     <img class="h-auto custom-size rounded-lg mx-auto shadow-lg" src="{{ asset('/image/lebar.png') }}" alt="image description">
 
-    <!-- Menampilkan jumlah guru dan siswa -->
+    <!-- Menampilkan jumlah guru, siswa, dan learnings -->
     <div class="mb-6 flex justify-center space-x-4">
-      <div class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center">
-        <h3 class="text-sm font-semibold mb-1">Modul</h3>
-        <p class="text-sm font-semibold mb-1"></p>
-      </div>
+      <a href="{{ route('learnings.index') }}" class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center hover-effect">
+        <i class="fas fa-lightbulb text-2xl mb-1 text-blue-600"></i>
+        <h3 class="text-lg font-bold mb-1">{{ $jumlahLearnings }}</h3>
+        <p class="text-sm font-semibold">Pembelajaran</p>
+      </a>
 
       <div class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center">
         <i class="fas fa-chalkboard-teacher text-2xl mb-1 text-blue-600"></i>
@@ -30,10 +31,7 @@
     </div>
 
   </div>
-  
-  <!-- Pembatas
-  <div class="border-t border-gray-300 my-8"></div> -->
-  
+
   <div class="p-4 sm:ml-64">
     <h2 class="mb-4 text-2xl font-extrabold tracking-tight leading-tight text-red-500 md:text-3xl lg:text-4xl text-center">
       Projek Penguatan Profil Pelajar Pancasila
@@ -42,7 +40,7 @@
     <!-- Membagi 2 box -->
     <div class="flex flex-col md:flex-row md:space-x-4">
       <div class="flex-1 p-4 bg-white border border-gray-300 rounded-lg shadow-lg mb-4 md:mb-0">
-        <img src="{{ asset('/image/modul_p5.png') }}" alt="Deskripsi Gambar 1" class="w-full h-auto rounded-lg mb-4">
+        <img src="{{ asset('/image/modul_p5.png') }}" alt="Deskripsi Gambar 1" class="w-3/4 h-auto mx-auto rounded-lg mb-4">
 
         <h2 class="text-xl font-bold mb-2 text-center">VISI PENDIDIKAN INDONESIA</h2>
         <p class="text-justify mb-4">
@@ -56,6 +54,20 @@
 
         <p class="text-justify mb-4">
           Proyek penguatan profil pelajar Pancasila adalah inisiatif yang bertujuan untuk mengembangkan karakter dan kompetensi pelajar Indonesia sesuai dengan nilai-nilai Pancasila. Profil pelajar Pancasila merujuk pada gambaran atau deskripsi tentang bagaimana seharusnya peserta didik yang dihasilkan oleh sistem pendidikan Indonesia, yang memiliki kompetensi, karakter, dan perilaku yang sesuai dengan nilai-nilai Pancasila.
+        </p>
+        <p class="text-justify mb-4">
+          Profil Pelajar Pancasila memiliki 6 dimensi utama meliputi:
+        </p>
+        <ul class="list-disc list-inside mb-4">
+          <li>Beriman, bertakwa kepada Tuhan Yang Maha Esa, dan berakhlak mulia.</li>
+          <li>Berkebinekaan global.</li>
+          <li>Bergotong-royong.</li>
+          <li>Mandiri.</li>
+          <li>Bernalar kritis.</li>
+          <li>Kreatif.</li>
+        </ul>
+        <p class="text-justify mb-4">
+          Salah satu langkah untuk mewujudkan Profil Pelajar Pancasila tersebut dilakukan melalui Projek Penguatan Profil Pelajar Pancasila (P5), yaitu pembelajaran lintas disiplin ilmu dalam mengamati dan memikirkan solusi terhadap permasalahan di lingkungan sekitar untuk menguatkan berbagai kompetensi dalam Profil Pelajar Pancasila.
         </p>
       </div>
 

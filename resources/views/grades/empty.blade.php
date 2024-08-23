@@ -1,5 +1,5 @@
 <x-app-layout title="Empty Nilai">
-    <div class="p-4 sm:ml-64">
+    <div class="p-6 sm:ml-64 pt-8">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <p class="mb-4 text-3xl font-extrabold tracking-tight leading-none text-black md:text-4xl lg:text-5xl text-center">
                 Sabar ya, hasil belajar belum tersedia saat ini.

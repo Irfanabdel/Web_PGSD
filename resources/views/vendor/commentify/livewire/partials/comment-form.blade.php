@@ -9,7 +9,7 @@
     @endif
     @csrf
     <div
-        class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200
+        class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-300
              ">
         <label for="{{$inputId}}" class="sr-only">{{$inputLabel}}</label>
         <textarea id="{{$inputId}}" rows="6"

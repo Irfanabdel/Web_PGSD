@@ -14,8 +14,15 @@ class Komen extends Model
 
     //Tambahkan kolom yang dapat diisi secara massal
     protected $fillable = [
+        'user_id',
         'title',
         'Desc',
         'image',
     ];
+
+    // Relasi dengan User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

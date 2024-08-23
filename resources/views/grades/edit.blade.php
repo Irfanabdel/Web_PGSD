@@ -1,34 +1,34 @@
 <x-app-layout title="Edit Nilai">
-    <div class="p-4 sm:ml-64">
+    <div class="p-6 sm:ml-64 pt-8">
         <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-            <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Edit Nilai</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Edit Asesmen</h1>
             <form action="{{ route('grades.update', $grade->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
 
                 <!-- User Selection (Readonly) -->
                 <div class="mb-6">
-                    <label for="user_id" class="block text-sm font-medium text-gray-900">Siswa</label>
-                    <input type="text" id="user_id" value="{{ $grade->user->name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly>
+                    <label for="user_id" class="block text-sm font-medium text-gray-900 mb-2">Siswa</label>
+                    <input type="text" id="user_id" value="{{ $grade->user->name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                     <input type="hidden" name="user_id" value="{{ $grade->user_id }}">
                 </div>
 
                 <!-- School Name Display -->
                 <div class="mb-6">
-                    <label for="school_name" class="block text-sm font-medium text-gray-900">Nama Sekolah</label>
-                    <input type="text" id="school_name" value="{{ old('school_name', $grade->user->school_name) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly>
+                    <label for="school_name" class="block text-sm font-medium text-gray-900 mb-2">Nama Sekolah</label>
+                    <input type="text" id="school_name" value="{{ old('school_name', $grade->user->school_name) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                 </div>
 
                 <!-- Kelas -->
                 <div class="mb-6">
-                    <label for="kelas" class="block text-sm font-medium text-gray-900">Kelas</label>
-                    <input type="text" id="kelas" value="{{ old('kelas', $grade->user->kelas) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly>
+                    <label for="kelas" class="block text-sm font-medium text-gray-900 mb-2">Kelas</label>
+                    <input type="text" id="kelas" value="{{ old('kelas', $grade->user->kelas) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                 </div>
 
                 <!-- Pilih Tema -->
                 <div class="mb-6">
-                    <label for="theme_id" class="block text-sm font-medium text-gray-900">Pilih Tema</label>
-                    <select name="theme_id" id="theme_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                    <label for="theme_id" class="block text-sm font-medium text-gray-900 mb-2">Pilih Tema</label>
+                    <select name="theme_id" id="theme_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                         <option value="" disabled selected>Pilih Tema</option>
                         @foreach($themes as $theme)
                         <option value="{{ $theme->id }}"
@@ -43,12 +43,12 @@
 
                 <!-- Dimensi Tema -->
                 <div class="mb-6">
-                    <table id="dimensions-table" class="w-full border border-gray-200 rounded-lg shadow-sm">
-                        <thead class="bg-gray-100">
+                    <table id="dimensions-table" class="w-full border border--200 rounded-lg shadow-sm">
+                        <thead class="bg-red-500">
                             <tr>
-                                <th class="p-4 text-sm font-medium text-gray-500">Dimensi</th>
-                                <th class="p-4 text-sm font-medium text-gray-500">Penilaian</th>
-                                <th class="p-4 text-sm font-medium text-gray-500">Aksi</th>
+                                <th class="p-4 text-sm font-medium text-white">Dimensi</th>
+                                <th class="p-4 text-sm font-medium text-white">Penilaian</th>
+                                <th class="p-4 text-sm font-medium text-white">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="dimensions-tbody" class="bg-white divide-y divide-gray-200">
@@ -62,14 +62,14 @@
 
                 <!-- Proyek 1 -->
                 <div class="mb-6">
-                    <label for="project1" class="block mb-2 text-sm font-medium text-gray-900">Projek 1</label>
-                    <input type="text" id="project1" name="project1" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly>
+                    <label for="project1" class="block mb-2 text-sm font-medium text-gray-900 mb-2">Projek 1</label>
+                    <input type="text" id="project1" name="project1" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                 </div>
 
                 <!-- Proyek 2 -->
                 <div class="mb-6">
-                    <label for="project2" class="block mb-2 text-sm font-medium text-gray-900">Projek 2</label>
-                    <input type="text" id="project2" name="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" readonly>
+                    <label for="project2" class="block mb-2 text-sm font-medium text-gray-900 mb-2">Projek 2</label>
+                    <input type="text" id="project2" name="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                 </div>
 
                 <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
@@ -124,7 +124,7 @@
                         const cell3 = row.insertCell(2);
 
                         cell1.innerHTML = `
-                            <div class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <div class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5">
                              ${dimension}
                             </div>
                         `;
@@ -133,7 +133,7 @@
                         const defaultAssessment = ""; // Example default value
 
                         cell2.innerHTML = `
-                        <select name="assessments[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <select name="assessments[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                             <option value="" disabled selected>Pilih Asesmen</option>
                             <option value="1">BB</option>
                             <option value="2">MB</option>
@@ -144,7 +144,7 @@
 
                         cell3.classList.add('text-center');
                         cell3.innerHTML = `
-                <button type="button" onclick="removeDimensionRow(this)" class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
+                <button type="button" onclick="removeDimensionRow(this)" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             `;

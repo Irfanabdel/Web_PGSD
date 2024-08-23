@@ -47,8 +47,7 @@ class ChartController extends Controller
                 $assessmentData[] = $assessmentMap[$assessments[$index] ?? null] ?? 'Unknown';
             }
 
-            $data[] = [
-                'themeTitle' => $theme->title,
+            $data[$theme->title][] = [
                 'dimensionLabels' => $dimensionLabels,
                 'assessmentData' => $assessmentData,
                 'project1' => $theme->project1,

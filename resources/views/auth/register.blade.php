@@ -5,14 +5,14 @@
         <!-- Name -->
         <div class="mb-4">
             <x-input-label for="name" :value="__('Nama')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Role -->
         <div class="mb-4">
             <x-input-label for="role" :value="__('Role')" />
-            <select name="role" id="role" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" onchange="toggleAdditionalFields()">
+            <select name="role" id="role" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" onchange="toggleAdditionalFields()">
                 <option value="siswa">Siswa</option>
                 <option value="guru">Guru</option>
             </select>
@@ -22,14 +22,14 @@
         <!-- Token (Conditional) -->
         <div id="additional-fields" class="hidden mb-4">
             <x-input-label for="token" :value="__('Masukkan Token')" />
-            <x-text-input id="token" class="block mt-1 w-full" type="text" name="token" :value="old('token')" />
+            <x-text-input id="token" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" type="text" name="token" :value="old('token')" />
             <x-input-error :messages="$errors->get('token')" class="mt-2" />
         </div>
 
         <!-- School Name -->
         <div class="mb-4">
             <x-input-label for="school_name" :value="__('Nama Sekolah')" />
-            <select name="school_name" id="school_name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+            <select name="school_name" id="school_name" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5">
                 <option value="SD A">SD A</option>
                 <option value="SD B">SD B</option>
                 <option value="SD C">SD C</option>
@@ -40,7 +40,7 @@
         <!-- Kelas -->
         <div class="mb-4">
             <x-input-label for="kelas" :value="__('Kelas')" />
-            <select name="kelas" id="kelas" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+            <select name="kelas" id="kelas" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -54,26 +54,26 @@
         <!-- Email Address -->
         <div class="mb-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mb-4">
             <x-input-label for="password" :value="__('Kata sandi')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <x-text-input id="password" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mb-4">
             <x-input-label for="password_confirmation" :value="__('Konfirmasi Kata sandi')" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input id="password_confirmation" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-between">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-yellow-500" href="{{ route('login') }}">
                 {{ __('Sudah memiliki akun?') }}
             </a>
 

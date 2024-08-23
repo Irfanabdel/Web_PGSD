@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="px-4 sm:ml-64">
-        <div class="py-12">
+        <div class="pt-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
                 <!-- Gambar Profil atau Icon -->
                 <div class="p-6 sm:p-8 bg-white shadow-lg rounded-lg border border-gray-200">

@@ -10,6 +10,9 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\KomenController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\LearningController;
+use App\Http\Controllers\ModuleController;
+use App\Models\Module;
 
 // Route untuk halaman selamat datang
 Route::get('/', function () {
@@ -54,10 +57,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('{grade}', [GradeController::class, 'update'])->name('grades.update');
             Route::delete('{grade}', [GradeController::class, 'destroy'])->name('grades.destroy');
         });
+
+        // Kelompokkan rute dengan prefix 'learnings'
+        Route::prefix('learnings')->name('learnings.')->group(function () {
+            Route::get('/', [LearningController::class, 'index'])->name('index');
+            Route::get('create', [LearningController::class, 'create'])->name('create');
+            Route::post('store/step1', [LearningController::class, 'storeStep1'])->name('store.step1');
+            Route::get('create/step2', [LearningController::class, 'createStep2'])->name('create.step2');
+            Route::get('/reset-step1', [LearningController::class, 'resetStep1Data'])->name('reset.step1');
+            Route::get('{learning}', [LearningController::class, 'show'])->name('show'); // Rute show untuk halaman detail
+            // Menambahkan rute untuk edit, update, dan delete
+            Route::get('{learning}/edit', [LearningController::class, 'edit'])->name('edit.step1'); // Rute edit langkah 1
+            Route::put('{learning}', [LearningController::class, 'update'])->name('update'); // Rute update
+            // Rute edit dan update untuk step 2
+            Route::get('{learning}/edit-step2', [ModuleController::class, 'editStep2'])->name('edit.step2');
+            Route::put('{learning}/update-step2', [ModuleController::class, 'updateStep2'])->name('update.step2');
+            Route::delete('{learning}', [LearningController::class, 'destroy'])->name('destroy'); // Rute delete
+        });
+
+        Route::prefix('modules')->name('modules.')->group(function () {
+            Route::get('create-step2', [ModuleController::class, 'createStep2'])->name('create.step2');
+            Route::post('store-step2', [ModuleController::class, 'storeStep2'])->name('store.step2');
+            Route::put('{module}/update-step2', [ModuleController::class, 'updateStep2'])->name('update.step2');
+            Route::delete('{module}', [ModuleController::class, 'destroy'])->name('destroy');
+            Route::get('create', [LearningController::class, 'create'])->name('create');
+        });
+    });
+
+    // Kelompokkan rute dengan prefix 'learnings'
+    Route::prefix('learnings')->name('learnings.')->group(function () {
+        Route::get('/', [LearningController::class, 'index'])->name('index');
+        Route::get('{learning}', [LearningController::class, 'show'])->name('show'); // Rute show untuk siswa
     });
 
     // Rute untuk menampilkan halaman chart
-Route::get('/grades/chart', [ChartController::class, 'showChart'])->name('grades.chart');
+    Route::get('/grades/chart', [ChartController::class, 'showChart'])->name('grades.chart');
 
     // Rute untuk diskusi
     Route::get('/diskusi', [KomenController::class, 'index'])->name('komen.index');

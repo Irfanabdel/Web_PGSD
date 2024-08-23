@@ -67,3 +67,35 @@
   white-space: normal; /* Allows text to wrap */
   word-break: break-word; /* Ensures long words break and wrap */
 }
+
+/* Ukuran Youtube */
+.video-thumbnail {
+  width: 33.33%; /* Lebar 1/3 dari elemen induk */
+  height: auto; /* Tinggi menyesuaikan lebar */
+  max-width: 100%; /* Pastikan tidak melebihi lebar elemen induk */
+}
+
+/* Transisi learnings.index */
+.custom-hover:hover {
+  background-color: #facc15; /* Warna merah pada hover */
+  transition: background-color 0.3s ease; /* Durasi dan jenis transisi */
+}
+
+/* Effect untuk dashboard.pembelajaran */
+.hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-effect:hover {
+  transform: scale(1.05); /* Membesar sedikit */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan */
+  background-color: #fefcbf; /* Warna kuning */
+}
+
+/* read-only */
+.readonly-input {
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}

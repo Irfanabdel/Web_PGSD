@@ -1,5 +1,5 @@
 <x-app-layout title="Tambah Tema">
-    <div class="p-4 sm:ml-64">
+    <div class="p-6 sm:ml-64 pt-8">
         <div class="bg-white shadow-md rounded-lg p-6 mb-6">
             <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Tambah Tema</h1>
             <form action="{{ route('themes.store') }}" method="POST" class="space-y-6">
@@ -8,7 +8,7 @@
                 <!-- Input Title -->
                 <div>
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Judul Tema</label>
-                    <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-400 focus:border-red-400 block w-full p-2.5" required>
+                    <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                 </div>
 
                 <!-- Dimensi Table -->
@@ -30,13 +30,13 @@
                 <!-- Input Project 1 -->
                 <div>
                     <label for="project1" class="block mb-2 text-sm font-medium text-gray-900">Projek 1</label>
-                    <input type="text" name="project1" id="project1" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-300 focus:border-red-300 block w-full p-2.5" required>
+                    <input type="text" name="project1" id="project1" class="bg-gray-50 border border-gray-400 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                 </div>
 
                 <!-- Input Project 2 -->
                 <div>
                     <label for="project2" class="block mb-2 text-sm font-medium text-gray-900">Projek 2</label>
-                    <input type="text" name="project2" id="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-300 focus:border-red-300 block w-full p-2.5" required>
+                    <input type="text" name="project2" id="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                 </div>
 
                 <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
@@ -58,7 +58,7 @@
             cell2.classList.add('text-center');
 
             cell1.innerHTML = `
-                <select name="dimensions[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2.5" required>
+                <select name="dimensions[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                     <option value="1">Beriman dan Bertaqwa Kepada Tuhan YME dan Berakhlak Mulia</option>
                     <option value="2">Berkebinekaan Global</option>
                     <option value="3">Bergotong Royong</option>
@@ -69,7 +69,7 @@
             `;
 
             cell2.innerHTML = `
-                <button type="button" onclick="removeDimensionRow(this)" class="text-red-600 hover:text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
+                <button type="button" onclick="removeDimensionRow(this)" class="text-red-600 hover:text-red-700 focus:ring-4 focus:outline-none focus:ring-red-400 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             `;

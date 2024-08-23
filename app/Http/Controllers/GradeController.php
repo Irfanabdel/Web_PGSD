@@ -6,15 +6,68 @@ use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\User;
 use App\Models\Theme;
+use Carbon\Carbon;
 
 class GradeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $grades = Grade::with(['user', 'theme'])->get();
-        $themesExist = Theme::count() > 0; // Cek apakah ada tema
+        // Ambil parameter sorting dari query string
+        $sortBy = $request->input('sort_by', 'updated_at'); // Default sort by 'updated_at'
+        $sortOrder = $request->input('sort_order', 'desc'); // Default order is descending
 
-        return view('grades.index', compact('grades', 'themesExist'));
+        // Validasi parameter sorting
+        $validSortBy = ['name', 'school_name', 'kelas', 'updated_at'];
+        $validSortOrder = ['asc', 'desc'];
+
+        if (!in_array($sortBy, $validSortBy)) {
+            $sortBy = 'updated_at';
+        }
+
+        if (!in_array($sortOrder, $validSortOrder)) {
+            $sortOrder = 'desc';
+        }
+
+        // Ambil semua nilai dengan relasi 'user' dan 'theme', lalu urutkan berdasarkan parameter
+        $grades = Grade::with(['user', 'theme'])
+            ->when($sortBy === 'name', function ($query) use ($sortOrder) {
+                // Sorting berdasarkan kolom 'name' di tabel 'users'
+                $query->join('users', 'grades.user_id', '=', 'users.id')
+                    ->orderBy('users.name', $sortOrder);
+            })
+            ->when($sortBy === 'school_name', function ($query) use ($sortOrder) {
+                // Sorting berdasarkan kolom 'school_name' di tabel 'users'
+                $query->join('users', 'grades.user_id', '=', 'users.id')
+                    ->orderBy('users.school_name', $sortOrder);
+            })
+            ->when($sortBy === 'kelas', function ($query) use ($sortOrder) {
+                // Sorting berdasarkan kolom 'kelas' di tabel 'users'
+                $query->join('users', 'grades.user_id', '=', 'users.id')
+                    ->orderBy('users.kelas', $sortOrder);
+            })
+            ->when($sortBy === 'updated_at', function ($query) use ($sortOrder) {
+                // Sorting berdasarkan kolom 'updated_at' di tabel 'grades'
+                $query->orderBy('grades.updated_at', $sortOrder);
+            })
+            ->get();
+
+        // Ambil ID tema yang sudah memiliki nilai
+        $themeIdsWithGrades = $grades->pluck('theme_id')->unique();
+
+        // Ambil tema yang ID-nya ada dalam daftar tema dengan nilai dan urutkan berdasarkan ID tema
+        $themes = Theme::whereIn('id', $themeIdsWithGrades)
+            ->orderBy('id')
+            ->get();
+
+        // Cek apakah ada tema
+        $themesExist = $themes->count() > 0;
+
+        // Format tanggal update dengan zona waktu Asia/Jakarta
+        $grades->each(function ($grade) {
+            $grade->updated_at = Carbon::parse($grade->updated_at)->setTimezone('Asia/Jakarta');
+        });
+
+        return view('grades.index', compact('grades', 'themes', 'themesExist', 'sortBy', 'sortOrder'));
     }
 
     public function create()

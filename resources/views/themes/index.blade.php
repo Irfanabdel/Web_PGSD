@@ -1,5 +1,5 @@
 <x-app-layout title="Tema P5">
-    <div class="p-4 sm:ml-64">
+    <div class="p-6 sm:ml-64 pt-8">
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
             <div class="w-full mb-4">
                 <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl">Daftar Tema P5</h1>

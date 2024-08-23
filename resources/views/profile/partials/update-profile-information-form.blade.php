@@ -19,14 +19,14 @@
 
         <div>
             <x-input-label for="name" :value="__('Nama')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <!-- Nama Sekolah -->
         <div>
             <x-input-label for="school_name" :value="__('Nama Sekolah')" />
-            <select name="school_name" id="school_name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+            <select name="school_name" id="school_name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5">
                 <!-- Menampilkan kelas lama yang sudah dipilih -->
                 <option value="{{ $user->school_name }}" selected>{{ $user->school_name }}</option>
                 <!-- Opsi kelas lainnya -->
@@ -40,7 +40,7 @@
         <!-- Kelas -->
         <div>
             <x-input-label for="kelas" :value="__('Kelas')" />
-            <select name="kelas" id="kelas" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+            <select name="kelas" id="kelas" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5">
                 <!-- Menampilkan kelas lama yang sudah dipilih -->
                 <option value="{{ $user->kelas }}" selected>{{ $user->kelas }}</option>
                 <!-- Opsi kelas lainnya -->
@@ -57,7 +57,7 @@
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
