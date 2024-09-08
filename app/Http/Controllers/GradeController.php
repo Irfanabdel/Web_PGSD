@@ -60,7 +60,7 @@ class GradeController extends Controller
             ->get();
 
         // Cek apakah ada tema
-        $themesExist = $themes->count() > 0;
+        $themesExist = $themes->isNotEmpty();
 
         // Format tanggal update dengan zona waktu Asia/Jakarta
         $grades->each(function ($grade) {

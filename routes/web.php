@@ -12,6 +12,9 @@ use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\WorkController;
+
 use App\Models\Module;
 
 // Route untuk halaman selamat datang
@@ -73,6 +76,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('{learning}/edit-step2', [ModuleController::class, 'editStep2'])->name('edit.step2');
             Route::put('{learning}/update-step2', [ModuleController::class, 'updateStep2'])->name('update.step2');
             Route::delete('{learning}', [LearningController::class, 'destroy'])->name('destroy'); // Rute delete
+            // Rtue untuk Evaluasi
+            Route::get('{learning}/create-step3', [EvaluationController::class, 'createStep3'])->name('create.step3');
+            Route::post('{learning}/store-step3', [EvaluationController::class, 'storeStep3'])->name('store.step3');
+            // Rute edit dan update untuk Evaluasi
+            Route::get('{learning}/evaluations/{evaluation}/edit', [EvaluationController::class, 'editStep3'])->name('edit.step3');
+            Route::put('{learning}/evaluations/{evaluation}', [EvaluationController::class, 'updateStep3'])->name('update.step3');
+            // Rute untuk meng-handle upload file evaluasi
+            Route::post('evaluations/files', [EvaluationController::class, 'evaluationFiles'])->name('evaluation.files');
+            // Rute untuk hapus evaluasi
+            Route::delete('{learning}/evaluations/{evaluation}', [EvaluationController::class, 'destroy'])->name('destroy.evaluation');
+            // Rute untuk halaman kerja dan penyimpanan jawaban pekerjaan
+            Route::get('evaluations/{evaluation}/works', [WorkController::class, 'createWork'])->name('work');
+            Route::post('evaluations/{evaluation}/works', [WorkController::class, 'storeWork'])->name('store.work');
         });
 
         Route::prefix('modules')->name('modules.')->group(function () {
@@ -84,10 +100,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    // Kelompokkan rute dengan prefix 'learnings'
+    // Rute yang bisa diakses oleh semua user
     Route::prefix('learnings')->name('learnings.')->group(function () {
         Route::get('/', [LearningController::class, 'index'])->name('index');
         Route::get('{learning}', [LearningController::class, 'show'])->name('show'); // Rute show untuk siswa
+        // Rute untuk halaman kerja dan penyimpanan jawaban pekerjaan
+        Route::get('evaluations/{evaluation}/works', [WorkController::class, 'createWork'])->name('work');
+        Route::post('evaluations/{evaluation}/works', [WorkController::class, 'storeWork'])->name('store.work');
+        // Rute untuk meng-handle upload file evaluasi
+        Route::post('evaluations/files', [EvaluationController::class, 'evaluationFiles'])->name('evaluation.files');
     });
 
     // Rute untuk menampilkan halaman chart

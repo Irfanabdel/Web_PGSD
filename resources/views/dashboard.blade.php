@@ -1,7 +1,7 @@
 <x-app-layout title="welcome">
-  <div class="p-6 sm:ml-64 pt-8">
-    <h1 class="mb-4 text-3xl font-extrabold tracking-tight leading-none text-black md:text-4xl lg:text-5xl text-center">
-      Selamat Datang di E-Learning P5
+  <div class="p-6 sm:ml-64 pt-4">
+    <h1 class="mb-4 text-3xl font-extrabold tracking-tight leading-none md:text-4xl lg:text-5xl text-center fancy-text">
+      SELAMAT DATANG DI E-LEARNING P5
     </h1>
 
     <!--Link ke styles.css-->
@@ -11,19 +11,19 @@
 
     <!-- Menampilkan jumlah guru, siswa, dan learnings -->
     <div class="mb-6 flex justify-center space-x-4">
-      <a href="{{ route('learnings.index') }}" class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center hover-effect">
+      <a href="{{ route('learnings.index') }}" class="w-1/6 max-w-xs p-2 bg-blue-200 border border-blue-300 rounded-lg shadow-lg text-center hover-effect">
         <i class="fas fa-lightbulb text-2xl mb-1 text-blue-600"></i>
         <h3 class="text-lg font-bold mb-1">{{ $jumlahLearnings }}</h3>
-        <p class="text-sm font-semibold">Pembelajaran</p>
+        <p class="text-sm font-semibold">Modul</p>
       </a>
 
-      <div class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center">
+      <div class="w-1/6 max-w-xs p-2 bg-blue-200 border border-blue-300 rounded-lg shadow-lg text-center">
         <i class="fas fa-chalkboard-teacher text-2xl mb-1 text-blue-600"></i>
         <h3 class="text-lg font-bold mb-1">{{ $jumlahGuru }}</h3>
         <p class="text-sm font-semibold">Guru</p>
       </div>
 
-      <div class="w-1/6 max-w-xs p-2 bg-blue-100 border border-blue-300 rounded-lg shadow-lg text-center">
+      <div class="w-1/6 max-w-xs p-2 bg-blue-200 border border-blue-300 rounded-lg shadow-lg text-center">
         <i class="fas fa-user-graduate text-2xl mb-1 text-blue-600"></i>
         <h3 class="text-lg font-bold mb-1">{{ $jumlahSiswa }}</h3>
         <p class="text-sm font-semibold">Siswa</p>
@@ -32,8 +32,8 @@
 
   </div>
 
-  <div class="p-4 sm:ml-64">
-    <h2 class="mb-4 text-2xl font-extrabold tracking-tight leading-tight text-red-500 md:text-3xl lg:text-4xl text-center">
+  <div class="p-6 sm:ml-64 pt-8">
+    <h2 class="mb-4 text-2xl font-extrabold tracking-tight leading-tight text-center text md:text-3xl lg:text-4xl">
       Projek Penguatan Profil Pelajar Pancasila
     </h2>
 

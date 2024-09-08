@@ -63,18 +63,8 @@ class LearningController extends Controller
             $coverImagePath = $request->file('cover_image')->store('cover_images', 'public');
         }
 
-        // Menyimpan data ke database
-        $learnings = Learning::create([
-            'theme_id' => $request->theme_id,
-            'user_kelas' => $request->user_kelas,
-            'element' => $request->element,
-            'goals' => $request->goals,
-            'cover_image' => $coverImagePath,
-        ]);
-
         // Menyimpan data ke sesi dengan ID pembelajaran
         $request->session()->put('learning_data', [
-            'learnings_id' => $learnings->id, // Simpan ID pembelajaran
             'theme_id' => $request->theme_id,
             'user_kelas' => $request->user_kelas,
             'element' => $request->element,
@@ -127,12 +117,17 @@ class LearningController extends Controller
     public function show(Learning $learning)
     {
         // Eager load the 'modules' relationship to reduce queries
-        $learning->load('modules');
+        $learning->load('modules', 'evaluations.works');
+
+        // Mendapatkan user yang sedang login
+        $user = auth()->user();
 
         // Mengirimkan entitas Learning dan modul-modul terkait ke tampilan
         return view('learnings.show', [
             'learning' => $learning,
             'modules' => $learning->modules, // Kirimkan modul-modul terkait ke tampilan
+            'evaluations' => $learning->evaluations, // Kirimkan evaluasi terkait ke tampilan
+            'works' => $learning->evaluations->flatMap->works, // Kirimkan works terkait ke tampilan
         ]);
     }
 
@@ -203,6 +198,26 @@ class LearningController extends Controller
         // Hapus gambar cover jika ada
         if ($learning->cover_image && Storage::disk('public')->exists($learning->cover_image)) {
             Storage::disk('public')->delete($learning->cover_image);
+        }
+
+        // Hapus modul-modul terkait
+        foreach ($learning->modules as $module) {
+            // Hapus file modul utama jika ada
+            if ($module->file && Storage::disk('public')->exists($module->file)) {
+                Storage::disk('public')->delete($module->file);
+            }
+
+            // Hapus file siswa terkait
+            if ($module->student_files) {
+                foreach ($module->student_files as $filePath) {
+                    if (Storage::disk('public')->exists($filePath)) {
+                        Storage::disk('public')->delete($filePath);
+                    }
+                }
+            }
+
+            // Hapus modul dari database
+            $module->delete();
         }
 
         // Hapus data pembelajaran dari database

@@ -28,16 +28,20 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
-        
-        // Update school_name and kelas fields
+
+        // Update name, school_name, and kelas fields
+        $user->name = $request->input('name');
         $user->school_name = $request->input('school_name');
         $user->kelas = $request->input('kelas');
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Check if email is changed
+        if ($user->email !== $request->input('email')) {
+            $user->email = $request->input('email');
+            $user->email_verified_at = null; // Reset email verification status
         }
 
-        $request->user()->save();
+        // Save the updated user information
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -92,10 +96,19 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        // Hapus gambar profil jika ada
+        if ($user->image) {
+            // Hapus gambar dari storage
+            Storage::disk('public')->delete($user->image);
+        }
+
+        // Logout pengguna
         Auth::logout();
 
+        // Hapus data pengguna dari database
         $user->delete();
 
+        // Hapus sesi pengguna
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

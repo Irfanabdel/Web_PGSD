@@ -1,19 +1,19 @@
 <x-app-layout title="Deskripsi Pembelajaran">
     <div class="p-6 sm:ml-64 pt-8">
-        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <div class="bg-white shadow-md rounded-lg p-6">
             <!-- Info Step -->
-            <div class="mb-6 flex justify-center items-center">
+            <div class="flex justify-center items-center">
                 <p class="text-2xl font-bold text-gray-900">
                     <span class="text-red-500">Step 1</span> dari 2
                 </p>
             </div>
 
-            <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-8">Deskripsi Pembelajaran</h1>
+            <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-8">Deskripsi Pembelajaran</h1>
             <form action="{{ route('learnings.store.step1') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
 
                 <!-- Pilih Tema -->
-                <div class="mb-8">
+                <div class="mb-4">
                     <label for="theme_id" class="block text-sm font-medium text-gray-900 mb-2">Pilih Tema</label>
                     <select name="theme_id" id="theme_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                         <option value="" disabled selected>Pilih Tema</option>
@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- Kelas Selection -->
-                <div class="mb-8">
+                <div class="mb-4">
                     <label for="user_kelas" class="block text-sm font-medium text-gray-900 mb-2">Kelas</label>
                     <select name="user_kelas" id="user_kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                         <option value="" disabled selected>Pilih Kelas</option>
@@ -45,7 +45,7 @@
                 </div>
 
                 <!-- Dimensi Tema -->
-                <div class="mb-8">
+                <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-900 mb-2">Dimensi</label>
                     <ul id="dimensions-list" class="list-disc pl-5 space-y-1">
                         <!-- Dimensi akan diisi oleh JavaScript -->
@@ -64,7 +64,7 @@
                 </div>
 
                 <!-- Input Elemen -->
-                <div class="mb-8">
+                <div class="mb-4">
                     <label for="element" class="block mb-2 text-sm font-medium text-gray-900">Elemen</label>
                     <input type="text" name="element" id="element" value="{{ old('element', $learningData['element'] ?? '') }}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                     @error('element')
@@ -72,8 +72,8 @@
                     @enderror
                 </div>
 
-                <!-- Input Tujuan -->
-                <div class="mb-8">
+                <!-- Input Tujuan menggunakan TinyMCE -->
+                <div class="mb-4">
                     <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Tujuan</label>
                     <textarea name="goals" id="goals" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>{{ old('goals', $learningData['goals'] ?? '') }}</textarea>
                     @error('goals')
@@ -82,9 +82,9 @@
                 </div>
 
                 <!-- Upload Cover Image -->
-                <div class="mb-8">
+                <div class="mb-4">
                     <label for="cover_image" class="block text-sm font-medium text-gray-900 mb-2">Upload Gambar Cover</label>
-                    <input type="file" name="cover_image" id="cover_image" class="border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" accept="image/*">
+                    <input type="file" name="cover_image" id="cover_image" class="mt-1 block w-full text-gray-900 border border-white rounded-lg" accept="image/*">
                     <p class="mt-1 text-sm text-gray-500">Ukuran maksimal gambar adalah 5 MB. Format yang diterima: JPEG, PNG, JPG.</p>
                 </div>
 
@@ -96,6 +96,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.tiny.cloud/1/alb42zv55n2f3tyry7ir4vpjl69aaxbwn30db6omng9lmsj5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeSelect = document.getElementById('theme_id');
@@ -106,14 +107,14 @@
                 const selectedOption = themeSelect.options[themeSelect.selectedIndex];
                 const dimensionsText = selectedOption.getAttribute('data-dimensions') || '';
 
-                updateDimensionsList(dimensionsText); // Update list with dimensions
+                updateDimensionsList(dimensionsText); // Update daftar dimensi
             });
 
             function updateDimensionsList(dimensionsText) {
-                dimensionsList.innerHTML = ''; // Clear existing dimensions
+                dimensionsList.innerHTML = ''; // Kosongkan dimensi yang ada
 
                 if (dimensionsText) {
-                    // Ganti "<br>" dengan pemisah baris baru dan kemudian pisahkan teks
+                    // Ganti "<br>" dengan baris baru lalu pisahkan teksnya
                     const dimensions = dimensionsText.split('<br>').map(d => d.trim()).filter(d => d.length > 0);
                     dimensions.forEach(dimension => {
                         const li = document.createElement('li');
@@ -123,17 +124,25 @@
                 }
             }
 
-            // Initialize TinyMCE for the goals textarea
-            tinymce.init({
-                selector: '#goals',
-                plugins: 'lists',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist',
-                menubar: false
-            });
-
-            // Initialize dimensions list on page load
+            // Inisialisasi daftar dimensi saat halaman dimuat
             const initialDimensionsText = themeSelect.querySelector('option:checked')?.getAttribute('data-dimensions') || '';
             updateDimensionsList(initialDimensionsText);
+
+             // Inisialisasi TinyMCE untuk textarea 'goals'
+             tinymce.init({
+                selector: '#goals',
+                plugins: 'lists link image',
+                toolbar: 'undo redo | bold italic underline | bullist numlist | link image',
+                menubar: false,
+                branding: false,
+                height: 300,
+                content_style: "body { font-family:Arial,Helvetica,sans-serif; font-size:14px }",
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        tinymce.triggerSave(); // Sinkronkan konten TinyMCE dengan textarea
+                    });
+                }
+            });
         });
     </script>
 </x-app-layout>

@@ -20,7 +20,7 @@
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-md mt-4">
             <!-- Kontainer dengan overflow-x-auto -->
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 table-fixed border-collapse">
+                <table class="min-w-full divide-y divide-gray-200 table-fixed border">
                     <thead class="bg-red-500 text-gray-700">
                         <tr>
                             <!-- Checkbox for selecting all rows -->

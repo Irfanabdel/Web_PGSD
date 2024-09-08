@@ -58,7 +58,7 @@
                 </div>
 
                 <!-- Konten informasi tema yang dapat ditampilkan/ditutup -->
-                <div id="info-content-theme" class="hidden space-y-4">
+                <div id="info-content-theme" class="space-y-4">
                     <!-- Menampilkan Dimensi dengan Pemisah Koma -->
                     <div class="text-base sm:text-lg">
                         <p class="font-bold">Dimensi:</p>
@@ -71,10 +71,11 @@
                         <p>{{ $learning->element ?? 'Elemen Tidak Tersedia' }}</p>
                     </div>
 
-                    <!-- Menampilkan Tujuan -->
                     <div class="text-base sm:text-lg">
                         <p class="font-bold">Tujuan:</p>
-                        <p>{{ $learning->goals ?? 'Tujuan Tidak Tersedia' }}</p>
+                        <ol class="goals-list">
+                            {!! $learning->goals ?? '<li>Tujuan Tidak Tersedia</li>' !!}
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -99,32 +100,18 @@
                             </a>
                             <span class="tooltiptext">Edit</span>
                         </div>
-                        
-                        <!-- Delete Icon with Tooltip -->
-                        @foreach ($learning->modules as $module)
-                        <div class="tooltip inline-block">
-                            <form action="{{ route('modules.destroy', $module->id) }}" method="POST" class="inline-block" onsubmit="return confirmDelete(event)">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-red-600 rounded-lg hover:text-red-800 focus:ring-2 focus:ring-red-300">
-                                    <i class="fas fa-trash-alt"></i> <!-- Font Awesome Trash Icon -->
-                                </button>
-                            </form>
-                            <span class="tooltiptext">Hapus</span>
-                        </div>
-                        @endforeach
                     </div>
                     @endif
                 </div>
 
-                <div id="info-content-module" class="hidden space-y-6">
+                <div id="info-content-module" class="space-y-6">
                     @forelse ($learning->modules as $module)
                     <div class="mb-4 space-y-4">
                         <!-- Menampilkan File dengan Ikon Default hanya untuk pengguna dengan role 'guru' -->
                         @if (auth()->user()->role === 'guru')
                         @if ($module->file)
                         <p class="font-bold">Module Guru:</p>
-                        <a href="{{ Storage::url($module->file) }}" class="text-blue-600" target="_blank">
+                        <a href="{{ Storage::url($module->file) }}" class="text-blue-600 hover:underline" target="_blank">
                             <img src="{{ asset('image/file.png') }}" alt="File Icon" class="inline-block w-8 sm:w-12 h-8 sm:h-12 mr-2">
                             {{ basename($module->file) }}
                         </a>
@@ -140,7 +127,7 @@
                         <ul class="list-disc list-inside">
                             @foreach ($module->student_files as $index => $studentFile)
                             <li>
-                                <a href="{{ Storage::url($studentFile) }}" class="text-blue-600" target="_blank">
+                                <a href="{{ Storage::url($studentFile) }}" class="text-blue-600 hover:underline" target="_blank">
                                     <img src="{{ asset('image/file.png') }}" alt="File Icon" class="inline-block w-8 sm:w-12 h-8 sm:h-12 mr-2">
                                     {{ $module->student_files_titles[$index] ?? 'Judul Tidak Tersedia' }}
                                 </a>
@@ -157,7 +144,7 @@
                         <p class="font-bold mt-2">Links Pembelajaran:</p>
                         <ul class="list-disc list-inside">
                             @foreach ($module->links as $link)
-                            <li><a href="{{ $link }}" class="text-blue-600" target="_blank">{{ $link }}</a></li>
+                            <li><a href="{{ $link }}" class="text-blue-600 hover:underline" target="_blank">{{ $link }}</a></li>
                             @endforeach
                         </ul>
                         @else
@@ -171,7 +158,7 @@
                         <ul class="list-disc list-inside">
                             @foreach ($module->videos as $video)
                             <li class="mb-4">
-                                <a href="{{ $video }}" class="text-blue-600" target="_blank">{{ $video }}</a>
+                                <a href="{{ $video }}" class="text-blue-600 hover:underline" target="_blank">{{ $video }}</a>
                                 <iframe class="video-thumbnail mt-2 w-full sm:w-64 h-40 sm:h-48" id="video-{{ $loop->index }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
@@ -193,6 +180,148 @@
                     @endforelse
                 </div>
             </div>
+
+            <!-- Evaluasi -->
+            <div class="mb-8">
+                <div class="relative">
+                    <div class="flex items-center cursor-pointer mb-4 border-b border-gray-300 pb-2" onclick="toggleInfo('info-content-evaluation', 'toggle-icon-evaluation')">
+                        <svg id="toggle-icon-evaluation" xmlns="http://www.w3.org/2000/svg" class="h-4 sm:h-5 w-4 sm:w-5 mr-2 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <p class="text-lg sm:text-xl font-bold">Evaluasi</p>
+                    </div>
+
+                    <!-- Tombol untuk Guru -->
+                    @if (auth()->user()->role === 'guru')
+                    <div class="absolute top-0 right-0 mt-2 mr-2">
+                        <a href="{{ route('learnings.create.step3', $learning->id) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 rounded-lg hover:text-blue-800 focus:ring-2 focus:ring-blue-300">
+                            Tambah Evaluasi
+                        </a>
+                    </div>
+                    @endif
+                </div>
+
+                <!-- Konten Evaluasi -->
+                <div id="info-content-evaluation" class="space-y-4">
+                    @forelse ($evaluations as $evaluation)
+                    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-md relative">
+                        <!-- Tombol Edit untuk Guru -->
+                        @if (auth()->user()->role === 'guru')
+                        <div class="absolute top-2 right-2 flex space-x-2">
+                            <!-- Edit Icon with Tooltip -->
+                            <div class="tooltip inline-block">
+                                <a href="{{ route('learnings.edit.step3', ['learning' => $learning->id, 'evaluation' => $evaluation->id]) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 rounded-lg hover:text-blue-800 focus:ring-2 focus:ring-blue-300">
+                                    <i class="fas fa-edit"></i> <!-- Font Awesome Edit Icon -->
+                                </a>
+                                <span class="tooltiptext">Edit</span>
+                            </div>
+                            <!-- Hapus Icon with Tooltip -->
+                            <div class="tooltip inline-block">
+                                <form action="{{ route('learnings.destroy.evaluation', ['learning' => $learning->id, 'evaluation' => $evaluation->id]) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus evaluasi ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-600 rounded-lg hover:text-red-800 focus:ring-2 focus:ring-red-300">
+                                        <i class="fas fa-trash"></i> <!-- Font Awesome Trash Icon -->
+                                    </button>
+                                </form>
+                                <span class="tooltiptext">Hapus</span>
+                            </div>
+                        </div>
+                        @endif
+
+                        <h3 class="text-lg font-bold mb-2">{{ $evaluation->title }}</h3>
+                        <ol class="evaluation-description">{!! $evaluation->description !!}</ol>
+                        <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+                        <div class="flex flex-col space-y-2 text-sm text-red-500">
+                            <div class="flex items-center">
+                                <span class="w-20">Mulai</span>
+                                <span class="w-3/4">: {{ $evaluation->start_datetime }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-20">Berakhir</span>
+                                <span class="w-3/4">: {{ $evaluation->end_datetime }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Tombol Kerjakan -->
+                        @php
+                        $now = \Carbon\Carbon::now('Asia/Jakarta'); // Waktu saat ini di zona waktu Asia/Jakarta
+                        $endDatetime = \Carbon\Carbon::parse($evaluation->end_datetime)->setTimezone('Asia/Jakarta'); // Konversi end_datetime ke zona waktu Asia/Jakarta
+                        @endphp
+                        @if ($now->lt($endDatetime))
+                        <a href="{{ route('learnings.work', ['evaluation' => $evaluation->id]) }}" class="inline-flex items-center px-4 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300">
+                            Kerjakan
+                        </a>
+                        @else
+                        <p class="mt-4 text-red-600">Sesi Berakhir</p>
+                        @endif
+
+                        <!-- Tampilkan Tabel Jawaban -->
+                        @if (auth()->user()->role === 'guru')
+                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-md mt-4">
+                            <div class="overflow-x-auto">
+                                <h3 class="text-lg font-bold mb-2">Jawaban Siswa</h3>
+                                <table class="min-w-full divide-y divide-gray-200 table-fixed border">
+                                    <thead class="bg-red-500 text-gray-700">
+                                        <tr>
+                                            <!-- Checkbox for selecting all rows -->
+                                            <th scope="col" class="p-3 text-xs font-medium text-center text-gray-500 uppercase">
+                                                <input type="checkbox" id="select-all" class="form-checkbox">
+                                            </th>
+                                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Waktu Submit</th>
+                                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Nama</th>
+                                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Kelas</th>
+                                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Jawaban</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach ($evaluation->works as $work)
+                                        <tr class="hover:bg-gray-100 transition-colors">
+                                            <!-- Checkbox for each row -->
+                                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">
+                                                <input type="checkbox" class="form-checkbox row-checkbox" name="selected_works[]" value="{{ $work->id }}">
+                                            </td>
+                                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">
+                                                {{ \Carbon\Carbon::parse($work->updated_at)->setTimezone('Asia/Jakarta')->format('d-m-Y H:i') }}
+                                            </td>
+                                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">
+                                                {{ $work->user->name }}
+                                            </td>
+                                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">
+                                                {{ $work->user->kelas }}
+                                            </td>
+                                            <td class="evaluation-description">{!! $work->answers !!}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @elseif (auth()->user()->role === 'siswa')
+                        <div class="mt-4">
+                            <h4 class="text-lg font-bold mb-2">Jawaban Anda</h4>
+                            @php
+                            // Ambil jawaban siswa untuk evaluasi ini
+                            $studentAnswer = $evaluation->works->where('user_id', auth()->user()->id)->first();
+                            @endphp
+                            @if ($studentAnswer)
+                            <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                                <p class="font-semibold">Waktu Update:</p>
+                                <p>{{ \Carbon\Carbon::parse($studentAnswer->updated_at)->setTimezone('Asia/Jakarta')->format('d-m-Y H:i') }}</p>
+                                <p class="font-semibold">Jawaban:</p>
+                                <ol class="evaluation-description">{!! $studentAnswer->answers !!}</ol>
+                            </div>
+                            @else
+                            <p>Belum ada jawaban untuk evaluasi ini.</p>
+                            @endif
+                        </div>
+                        @endif
+                    </div>
+                    @empty
+                    <p>Konten Evaluasi belum tersedia.</p>
+                    @endforelse
+                </div>
+            </div>
         </div>
     </div>
 
@@ -201,13 +330,9 @@
         function toggleInfo(contentId, iconId) {
             var content = document.getElementById(contentId);
             var icon = document.getElementById(iconId);
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-            }
+
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
         }
 
         // Extracts the video ID from the YouTube URL
@@ -226,6 +351,27 @@
                 event.target.submit(); // Lanjutkan dengan submit jika pengguna mengonfirmasi
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+
+            selectAllCheckbox.addEventListener('change', function() {
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+
+            rowCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (Array.from(rowCheckboxes).every(checkbox => checkbox.checked)) {
+                        selectAllCheckbox.checked = true;
+                    } else {
+                        selectAllCheckbox.checked = false;
+                    }
+                });
+            });
+        });
     </script>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </x-app-layout>

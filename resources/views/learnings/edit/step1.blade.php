@@ -75,7 +75,7 @@
                 <!-- Upload Cover Image -->
                 <div class="mb-6">
                     <label for="cover_image" class="block text-sm font-medium text-gray-900">Upload Cover Image (Opsional)</label>
-                    <input type="file" name="cover_image" id="cover_image" class="border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" accept="image/*">
+                    <input type="file" name="cover_image" id="cover_image" class="mt-1 block w-full text-gray-900 border border-white rounded-lg" accept="image/*">
                     @if ($learning->cover_image)
                     <img src="{{ Storage::url($learning->cover_image) }}" alt="Cover Image" class="mt-2 h-32">
                     @endif
@@ -90,6 +90,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.tiny.cloud/1/alb42zv55n2f3tyry7ir4vpjl69aaxbwn30db6omng9lmsj5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeSelect = document.getElementById('theme_id');
@@ -117,12 +118,20 @@
                 }
             }
 
-            // Initialize TinyMCE for the goals textarea
+            // Inisialisasi TinyMCE untuk textarea 'goals'
             tinymce.init({
                 selector: '#goals',
-                plugins: 'lists',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist',
-                menubar: false
+                plugins: 'lists link image',
+                toolbar: 'undo redo | bold italic underline | bullist numlist',
+                menubar: false,
+                branding: false,
+                height: 300,
+                content_style: "body { font-family:Arial,Helvetica,sans-serif; font-size:14px }",
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        tinymce.triggerSave(); // Sinkronkan konten TinyMCE dengan textarea
+                    });
+                }
             });
 
             // Initialize dimensions list on page load

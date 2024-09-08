@@ -47,4 +47,10 @@ class Learning extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Definisikan relasi ke model Evaluasi
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class, 'learning_id');
+    }
 }

@@ -57,7 +57,7 @@
                     </table>
                     <!-- Keterangan di bawah tabel -->
                     <p class="mt-4 text-sm text-gray-600">Keterangan:</p>
-                        <p class="text-sm text-gray-600">BB: Baru Berkembang | MB: Masih Berkembang | BSH: Berkembang Sesuai Harapan | SB: Sangat Berkembang</p>
+                    <p class="text-sm text-gray-600">BB: Baru Berkembang | MB: Masih Berkembang | BSH: Berkembang Sesuai Harapan | SB: Sangat Berkembang</p>
                 </div>
 
                 <!-- Proyek 1 -->
@@ -72,7 +72,9 @@
                     <input type="text" id="project2" name="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
                 </div>
 
-                <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
+                <div class="flex justify-end">
+                    <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
+                </div>
             </form>
         </div>
     </div>

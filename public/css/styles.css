@@ -86,10 +86,33 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.fancy-text {
+  background: linear-gradient(90deg, #ff0080, #facc15, #ff0080);
+  background-size: 300%;
+  animation: gradient-animation 5s ease infinite;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+
 .hover-effect:hover {
   transform: scale(1.05); /* Membesar sedikit */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan */
-  background-color: #fefcbf; /* Warna kuning */
+  background-color: #facc15; /* Warna kuning */
 }
 
 /* read-only */
@@ -98,4 +121,67 @@
   background: transparent;
   color: inherit;
   padding: 0;
+}
+
+/* Gaya untuk Ordered List di bagian Goals */
+.goals-list {
+  margin: 5px 0;
+  padding-left: 20px;
+  list-style-type: decimal; /* Menentukan gaya nomor urut */
+}
+
+.goals-list li {
+  margin-bottom: 10px;
+  list-style-type: decimal; /* Menentukan gaya nomor urut */
+  font-size: 1rem; /* Ukuran font */
+  color: #333; /* Warna teks */
+}
+
+/* Gaya untuk Ordered List yang lebih besar atau berbeda */
+.goals-list-lg {
+  margin: 30px 0;
+  padding-left: 30px;
+  list-style-type: decimal;
+}
+
+.goals-list-lg li {
+  margin-bottom: 15px;
+  font-size: 1.125rem; /* Ukuran font lebih besar */
+  color: #444;
+}
+
+/* Gaya untuk deskripsi evaluasi */
+.evaluation-description {
+  font-size: 1rem; /* Ukuran font default */
+  line-height: 1.6; /* Jarak antar baris */
+  color: #333; /* Warna teks */
+  margin-bottom: 1.5rem; /* Margin bawah */
+  padding-left: 20px; /* Padding kiri untuk menyamakan dengan list */
+}
+
+.evaluation-description ol {
+  margin: 5px 0;
+  padding-left: 20px;
+  list-style-type: decimal; /* Menentukan gaya nomor urut */
+}
+
+.evaluation-description ul {
+  margin: 5px 0;
+  padding-left: 20px;
+  list-style-type: decimal; /* Menentukan gaya nomor urut */
+}
+
+.evaluation-description li {
+  margin-bottom: 10px;
+  font-size: 1rem; /* Ukuran font */
+  color: #333; /* Warna teks */
+}
+
+.evaluation-description a {
+  color: #1d4ed8; /* Warna link */
+  text-decoration: none; /* Menghapus garis bawah pada link */
+}
+
+.evaluation-description a:hover {
+  text-decoration: underline; /* Menambahkan garis bawah pada hover */
 }
