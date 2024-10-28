@@ -1,7 +1,7 @@
 <x-app-layout title="Edit Pembelajaran - {{ $learning->theme->title }}">
     <div class="p-6 sm:ml-64 pt-8">
         <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-            <h1 class="text-2xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Edit Pembelajaran</h1>
+            <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Edit Deskripsi Pembelajaran</h1>
             <form action="{{ route('learnings.update', $learning->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')

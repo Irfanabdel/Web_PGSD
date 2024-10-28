@@ -103,9 +103,18 @@
             <li>
                 <a href="{{ route('themes.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('themes*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
-                        <path <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
+                        <path fill-rule="evenodd" d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
                     </svg>
                     <span class="ms-4 font-semibold">Tema</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('teachers.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('teachers*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
+                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.473.337a.5.5 0 0 0-.946 0L6.954 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1.85l-1.323 3.837a.5.5 0 1 0 .946.326L4.908 11H7.5v2.5a.5.5 0 0 0 1 0V11h2.592l1.435 4.163a.5.5 0 0 0 .946-.326L12.15 11H14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H9.046z"/>
+                    </svg>
+                    <span class="ms-4 font-semibold">Modul</span>
                 </a>
             </li>
 
@@ -114,7 +123,7 @@
             <li>
                 <a href="{{ route('grades.chart') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('grades*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
+                        <path fill-rule="evenodd" d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
                     </svg>
                     <span class="ms-4 font-semibold">Asesmen</span>
                 </a>
@@ -127,7 +136,7 @@
             <li>
                 <a href="{{ route('learnings.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('learnings*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C10.897 2 10 2.897 10 4v16c0 1.103.897 2 2 2h10V4c0-1.103-.897-2-2-2H12zm0 2h8v14h-8V4zm-2 0v14H4V4h6zm0 16H4c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h6c1.103 0 2 .897 2 2v16z" />
+                        <path fill-rule="evenodd" d="M12 2C10.897 2 10 2.897 10 4v16c0 1.103.897 2 2 2h10V4c0-1.103-.897-2-2-2H12zm0 2h8v14h-8V4zm-2 0v14H4V4h6zm0 16H4c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h6c1.103 0 2 .897 2 2v16z" />
                     </svg>
                     <span class="ms-4 font-semibold">Pembelajaran</span>
                 </a>
@@ -136,7 +145,7 @@
             <li>
                 <a href="{{ route('komen.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('diskusi') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.213.213 0 0 1-.226.25h-.825c-.095 0-.183-.059-.22-.146a3.4 3.4 0 0 1-1.48-1.454C6.813 6.315 6.13 6.033 5.732 6.033zM7.881 11.5h.862c.095 0 .184.059.22.146.268.659.996 1.354 1.71 1.636.123.047.207.164.207.295v.73c0 .183-.175.31-.35.267a2.994 2.994 0 0 1-1.968-1.73c-.054-.13-.204-.2-.346-.198h-.337a.226.226 0 0 1-.226-.226v-.808c0-.124.1-.226.226-.226z" />
+                        <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.213.213 0 0 1-.226.25h-.825c-.095 0-.183-.059-.22-.146a3.4 3.4 0 0 1-1.48-1.454C6.813 6.315 6.13 6.033 5.732 6.033zM7.881 11.5h.862c.095 0 .184.059.22.146.268.659.996 1.354 1.71 1.636.123.047.207.164.207.295v.73c0 .183-.175.31-.35.267a2.994 2.994 0 0 1-1.968-1.73c-.054-.13-.204-.2-.346-.198h-.337a.226.226 0 0 1-.226-.226v-.808c0-.124.1-.226.226-.226z" />
                     </svg>
                     <span class="ms-4 font-semibold">Ruang Diskusi</span>
                 </a>
@@ -151,7 +160,7 @@
             <li>
                 <a href="{{ route('profile.edit') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('profile') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                     </svg>
                     <span class="ms-4 font-semibold">{{ Auth::user()->name }}</span>
                 </a>

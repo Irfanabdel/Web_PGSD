@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
+use App\Models\Module;
 use App\Models\Learning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,12 +15,13 @@ class EvaluationController extends Controller
     /**
      * Menampilkan formulir untuk membuat evaluasi baru.
      *
-     * @param  \App\Models\Learning  $learning
+     * @param  \App\Models\Module $module
      * @return \Illuminate\View\View
      */
-    public function createStep3(Learning $learning)
+    public function createStep3(Learning $learning, Module $module)
     {
-        return view('learnings.create.step3', ['learning' => $learning]);
+
+        return view('learnings.create.step3', compact('learning', 'module'));
     }
 
     /**
@@ -28,11 +30,10 @@ class EvaluationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeStep3(Request $request)
+    public function storeStep3(Request $request, Learning $learning, Module $module)
     {
         // Validasi data permintaan
         $request->validate([
-            'learning_id' => 'required|exists:learnings,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_datetime' => 'nullable|date_format:Y-m-d\TH:i',
@@ -43,18 +44,24 @@ class EvaluationController extends Controller
         $startDatetime = Carbon::parse($request->start_datetime, 'Asia/Jakarta')->toDateTimeString();
         $endDatetime = Carbon::parse($request->end_datetime, 'Asia/Jakarta')->toDateTimeString();
 
-        // Buat evaluasi baru
-        Evaluation::create([
-            'learning_id' => $request->learning_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_datetime' => $startDatetime,
-            'end_datetime' => $endDatetime,
-        ]);
+        try {
+            // Buat evaluasi baru
+            Evaluation::create([
+                'learning_id' => $learning->id,
+                'module_id' => $module->id,
+                'title' => $request->title,
+                'description' => $request->description,
+                'start_datetime' => $startDatetime,
+                'end_datetime' => $endDatetime,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
 
         // Redirect ke halaman detail pembelajaran
-        return redirect()->route('learnings.show', $request->learning_id);
+        return redirect()->route('learnings.show', $learning->id);
     }
+
 
     /**
      * Meng-handle upload file untuk evaluasi.
@@ -86,13 +93,30 @@ class EvaluationController extends Controller
         ]);
     }
 
-    public function editStep3(Learning $learning, Evaluation $evaluation)
+    /**
+     * Menampilkan formulir untuk mengedit evaluasi.
+     *
+     * @param  \App\Models\Learning $learning
+     * @param  \App\Models\Module $module
+     * @param  \App\Models\Evaluation $evaluation
+     * @return \Illuminate\View\View
+     */
+    public function editStep3(Learning $learning, Module $module, Evaluation $evaluation)
     {
-        return view('learnings.edit.step3', compact('learning', 'evaluation'));
+        // Pastikan evaluasi sesuai dengan learning dan module terkait
+        if ($evaluation->learning_id !== $learning->id || $evaluation->module_id !== $module->id) {
+            abort(404, 'Evaluasi tidak ditemukan.');
+        }
+
+        return view('learnings.edit.step3', compact('learning', 'module', 'evaluation'));
     }
 
-    public function updateStep3(Request $request, Learning $learning, Evaluation $evaluation)
+    public function updateStep3(Request $request, Learning $learning, Module $module, Evaluation $evaluation)
     {
+        // Pastikan evaluasi terkait dengan learning dan module yang benar
+        if ($evaluation->learning_id !== $learning->id || $evaluation->module_id !== $module->id) {
+            abort(404, 'Evaluasi tidak ditemukan.');
+        }
         // Validasi data permintaan
         $request->validate([
             'title' => 'required|string|max:255',
@@ -140,7 +164,7 @@ class EvaluationController extends Controller
         return redirect()->route('learnings.show', $learning->id);
     }
 
-    public function destroy(Learning $learning, Evaluation $evaluation)
+    public function destroy(Learning $learning, Module $module, Evaluation $evaluation)
     {
         // Hapus file dari deskripsi evaluasi
         $description = $evaluation->description;

@@ -4,11 +4,9 @@
             <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-8">Edit Evaluasi</h1>
             
             <!-- Formulir Edit Evaluasi -->
-            <form action="{{ route('learnings.update.step3', [$learning->id, $evaluation->id]) }}" method="POST">
+            <form action="{{ route('learnings.update.step3', [$learning->id, $module->id, $evaluation->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
-
-                <input type="hidden" name="learning_id" value="{{ $learning->id }}">
 
                 <div class="mb-6">
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Evaluasi</label>

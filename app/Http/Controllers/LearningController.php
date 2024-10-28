@@ -49,44 +49,25 @@ class LearningController extends Controller
     public function storeStep1(Request $request)
     {
         // Validasi data
-        $request->validate([
+        $validatedData = $request->validate([
             'theme_id' => 'required|exists:themes,id',
             'user_kelas' => 'required|string',
             'element' => 'required|string',
             'goals' => 'required|string',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg', // Maksimal 5 MB
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg', // 5 MB maksimal
         ]);
 
         // Menyimpan gambar cover jika ada
-        $coverImagePath = null;
         if ($request->hasFile('cover_image')) {
-            $coverImagePath = $request->file('cover_image')->store('cover_images', 'public');
+            $validatedData['cover_image'] = $request->file('cover_image')->store('cover_images', 'public');
         }
 
-        // Menyimpan data ke sesi dengan ID pembelajaran
-        $request->session()->put('learning_data', [
-            'theme_id' => $request->theme_id,
-            'user_kelas' => $request->user_kelas,
-            'element' => $request->element,
-            'goals' => $request->goals,
-            'cover_image' => $coverImagePath,
-        ]);
+        // Simpan data ke database
+        $learning = Learning::create($validatedData);
 
-        // Redirect ke langkah berikutnya
-        return redirect()->route('learnings.create.step2');
-    }
 
-    public function createStep2()
-    {
-        // Ambil data dari sesi
-        $learningData = session('learning_data');
-
-        if (!$learningData) {
-            return redirect()->route('learnings.create')->with('error', 'Data pembelajaran tidak ditemukan. Silakan mulai ulang.');
-        }
-
-        // Tampilkan formulir untuk langkah kedua
-        return view('learnings.create.step2', compact('learningData'));
+        // Redirect ke halaman show
+        return redirect()->route('learnings.index');
     }
 
     public function resetStep1Data(Request $request)
@@ -117,7 +98,7 @@ class LearningController extends Controller
     public function show(Learning $learning)
     {
         // Eager load the 'modules' relationship to reduce queries
-        $learning->load('modules', 'evaluations.works');
+        $learning->load('modules');
 
         // Mendapatkan user yang sedang login
         $user = auth()->user();
@@ -126,8 +107,14 @@ class LearningController extends Controller
         return view('learnings.show', [
             'learning' => $learning,
             'modules' => $learning->modules, // Kirimkan modul-modul terkait ke tampilan
-            'evaluations' => $learning->evaluations, // Kirimkan evaluasi terkait ke tampilan
-            'works' => $learning->evaluations->flatMap->works, // Kirimkan works terkait ke tampilan
+            'evaluations' => $learning->modules->flatMap(function ($module) {
+                return $module->evaluations; // Mengumpulkan semua evaluasi dari modul
+            }),
+            'works' => $learning->modules->flatMap(function ($module) {
+                return $module->evaluations->flatMap(function ($evaluation) {
+                    return $evaluation->works; // Mengumpulkan semua works dari evaluasi
+                });
+            }),
         ]);
     }
 

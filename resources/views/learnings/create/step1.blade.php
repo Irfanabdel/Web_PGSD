@@ -4,7 +4,7 @@
             <!-- Info Step -->
             <div class="flex justify-center items-center">
                 <p class="text-2xl font-bold text-gray-900">
-                    <span class="text-red-500">Step 1</span> dari 2
+                    <span class="text-red-500">Step 1</span>
                 </p>
             </div>
 
@@ -88,9 +88,9 @@
                     <p class="mt-1 text-sm text-gray-500">Ukuran maksimal gambar adalah 5 MB. Format yang diterima: JPEG, PNG, JPG.</p>
                 </div>
 
-                <!-- Tombol Next -->
+                <!-- Tombol Submit -->
                 <div class="flex justify-end">
-                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Next</button>
+                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
                 </div>
             </form>
         </div>

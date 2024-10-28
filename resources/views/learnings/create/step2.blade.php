@@ -4,19 +4,20 @@
             <!-- Info Step -->
             <div class="flex justify-center items-center">
                 <p class="text-2xl font-bold text-gray-900">
-                    <span class="text-red-500">Step 2</span> dari 2
+                    <span class="text-red-500">Step 2</span>
                 </p>
             </div>
-            <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Bahan Pembelajaran</h1>
-            <form action="{{ route('modules.store.step2') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-6">Detail Aktivitas</h1>
+            <form action="{{ route('learnings.store.step2', $learning->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
-                <!-- Unggah file Modul Guru -->
+                <!-- Judul Aktivitas -->
                 <div class="p-4 border border-gray-300 rounded-lg mb-6">
-                    <label for="file" class="block text-sm font-medium text-gray-700">Unggah Modul Guru</label>
-                    <input type="file" id="file" name="file" class="bg-gray-50 mt-1 block w-full text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-400 focus:border-yellow-400 sm:text-sm" />
-                    <p class="mt-2 text-sm text-gray-500">Jenis file yang diterima: PDF, DOC, DOCX, PPT, PPTX</p>
-                    @error('file')
+                    <label for="title" class="block text-sm font-medium text-gray-700">Aktivitas</label>
+                    <input type="text" name="title" id="title"
+                        placeholder="Masukkan nama aktivitas"
+                        class="bg-gray-50 mt-1 block w-full text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-400 focus:border-yellow-400 sm:text-sm" />
+                    @error('title')
                     <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                     @enderror
                 </div>
@@ -86,10 +87,9 @@
                     @enderror
                 </div>
 
-                <div class="flex justify-between mt-6">
-                    <!-- Tombol Kembali ke Langkah 1 -->
-                    <a href="{{ route('learnings.reset.step1') }}" class="text-blue-600 hover:text-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali ke Langkah 1</a>
-                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
+                <!-- Tombol Simpan -->
+                <div class="flex justify-end">
+                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>
                 </div>
             </form>
         </div>

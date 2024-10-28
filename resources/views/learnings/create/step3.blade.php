@@ -1,12 +1,16 @@
 <x-app-layout title="Evaluasi">
     <div class="p-6 sm:ml-64 pt-8">
         <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <!-- Info Step -->
+            <div class="flex justify-center items-center">
+                <p class="text-2xl font-bold text-gray-900">
+                    <span class="text-red-500">Step 3</span>
+                </p>
+            </div>
             <h1 class="text-2xl flex justify-center font-extrabold tracking-tight leading-tight text-gray-900 md:text-4xl lg:text-4xl mb-8">Evaluasi</h1>
             <!-- Formulir Tambah Evaluasi -->
-            <form action="{{ route('learnings.store.step3', $learning->id) }}" method="POST">
+            <form action="{{ route('learnings.store.step3', ['learning' => $learning->id, 'module' => $module->id]) }}" method="POST">
                 @csrf
-                <input type="hidden" name="learning_id" value="{{ $learning->id }}">
-
                 <div class="mb-6">
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Judul Evaluasi</label>
                     <input type="text" name="title" id="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-yellow-400 focus:border-yellow-400 sm:text-sm" required>
@@ -30,7 +34,7 @@
 
                 <div class="flex justify-end">
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Tambah Evaluasi
+                        Simpan
                     </button>
                 </div>
             </form>

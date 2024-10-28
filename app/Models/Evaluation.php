@@ -16,6 +16,7 @@ class Evaluation extends Model
     // Kolom yang dapat diisi massal
     protected $fillable = [
         'learning_id',
+        'module_id',
         'title',
         'description',
         'start_datetime',
@@ -51,14 +52,20 @@ class Evaluation extends Model
     }
 
     // Definisikan relasi ke model Learning
-    public function learning()
+    public function module()
     {
-        return $this->belongsTo(Learning::class);
+        return $this->belongsTo(Module::class);
     }
 
     // Definisikan relasi ke model Work
     public function works()
     {
         return $this->hasMany(Work::class);
+    }
+
+    // Definisikan relasi ke model Learning
+    public function learning()
+    {
+        return $this->belongsTo(Learning::class);
     }
 }

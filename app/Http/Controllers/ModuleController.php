@@ -10,16 +10,31 @@ use Illuminate\Support\Facades\Storage;
 class ModuleController extends Controller
 {
     /**
+     * Menampilkan halaman form langkah 2 untuk modul terkait dengan ID Learning.
+     *
+     * @param int $learning_id
+     * @return \Illuminate\View\View
+     */
+    public function createStep2($learning_id)
+    {
+        // Ambil data Learning berdasarkan ID
+        $learning = Learning::findOrFail($learning_id);
+
+        // Passing data ke view create.step2
+        return view('learnings.create.step2', compact('learning'));
+    }
+
+    /**
      * Menyimpan data formulir pembelajaran (Langkah 2).
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeStep2(Request $request)
+    public function storeStep2(Request $request, $learning_id)
     {
         // Validasi data
         $validatedData = $request->validate([
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx', // 10MB max file size
+            'title' => 'required|string|max:255',
             'links' => 'nullable|array',
             'links.*' => 'nullable|url',
             'videos' => 'nullable|array',
@@ -29,42 +44,6 @@ class ModuleController extends Controller
             'student_files_titles' => 'nullable|array',
             'student_files_titles.*' => 'nullable|string|max:255', // Validasi judul file siswa
         ]);
-
-        // Ambil data dari sesi
-        $learningData = session('learning_data');
-
-        // Menyimpan data pembelajaran jika belum ada
-        if (!isset($learningData['id'])) {
-            try {
-                $learning = Learning::create([
-                    'theme_id' => $learningData['theme_id'],
-                    'user_kelas' => $learningData['user_kelas'],
-                    'element' => $learningData['element'],
-                    'goals' => $learningData['goals'],
-                    'cover_image' => $learningData['cover_image'],
-                ]);
-
-                // Update data sesi dengan ID pembelajaran yang baru dibuat
-                $learningData['id'] = $learning->id;
-                $request->session()->put('learning_data', $learningData);
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Gagal menyimpan data pembelajaran. Silakan coba lagi.');
-            }
-        }
-
-        // Menyimpan file modul utama jika ada
-        $filePath = null;
-        if ($request->hasFile('file')) {
-            try {
-                $filePath = $request->file('file')->storeAs(
-                    'modules_files',
-                    $request->file('file')->getClientOriginalName(),
-                    'public'
-                );
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Gagal mengunggah file modul. Silakan coba lagi.');
-            }
-        }
 
         // Menyimpan file siswa jika ada
         $studentFilesPaths = [];
@@ -85,24 +64,20 @@ class ModuleController extends Controller
         // Menyimpan data modul ke database
         try {
             Module::create([
-                'learnings_id' => $learningData['id'], // Menggunakan ID pembelajaran dari sesi
-                'file' => $filePath,
+                'learning_id' => $learning_id, // Menggunakan ID pembelajaran yang diberikan
+                'title' => $validatedData['title'],
                 'links' => $request->input('links', []),
                 'videos' => $request->input('videos', []),
-                'student_files' => $studentFilesPaths,
+                'student_files' => ($studentFilesPaths),
                 'student_files_titles' => $request->input('student_files_titles', []),
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan data modul. Silakan coba lagi.');
         }
 
-        // Hapus data dari sesi setelah penyimpanan
-        $request->session()->forget('learning_data');
-
-        // Redirect atau tampilkan pesan sukses
-        return redirect()->route('learnings.index')->with('success', 'Modul berhasil disimpan!');
+        // Mengalihkan ke halaman indeks dengan pesan sukses
+        return redirect()->route('learnings.show', ['learning' => $learning_id])->with('success', 'Data modul berhasil disimpan.');
     }
-
 
     /**
      * Menampilkan halaman edit untuk pembelajaran (Langkah 2 - Modul).
@@ -110,25 +85,31 @@ class ModuleController extends Controller
      * @param \App\Models\Learning $learning
      * @return \Illuminate\View\View
      */
-    public function editStep2(Learning $learning)
+    public function editStep2($learning_id, $module_id)
     {
-        $modules = Module::where('learnings_id', $learning->id)->get();
-        // Mengambil modul pertama untuk diedit (misalnya, jika Anda ingin mengedit modul tertentu)
-        $module = $modules->first(); // Atau dapatkan modul sesuai kebutuhan
+        // Ambil modul berdasarkan ID
+        $module = Module::findOrFail($module_id);
 
-        // Mengembalikan view dengan data yang diperlukan
-        return view('learnings.edit.step2', [
-            'learning' => $learning,
-            'modules' => $modules,
-            'module' => $module,
-        ]);
+        // Ambil data lain yang mungkin diperlukan (seperti data pembelajaran terkait)
+        $learning = Learning::findOrFail($module->learning_id);
+
+        // Mengembalikan view dengan data modul dan pembelajaran
+        return view('learnings.edit.step2', compact('learning', 'module'));
     }
 
-    public function updateStep2(Request $request, Module $module)
+    public function updateStep2(Request $request, $module_id)
     {
+        // Ambil modul berdasarkan ID
+        $module = Module::find($module_id);
+
+        // Cek apakah modul ditemukan
+        if (!$module) {
+            return redirect()->back()->withErrors(['error' => 'Modul tidak ditemukan.']);
+        }
+
         // Validasi data
         $validatedData = $request->validate([
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx',
+            'title' => 'required|string|max:255',
             'links' => 'nullable|array',
             'links.*' => 'nullable|url',
             'videos' => 'nullable|array',
@@ -137,21 +118,8 @@ class ModuleController extends Controller
             'student_files.*' => 'file|mimes:pdf,doc,docx,ppt,pptx',
             'student_files_titles' => 'nullable|array',
             'student_files_titles.*' => 'nullable|string|max:255',
-            'existing_student_files' => 'nullable|array', // Tambahkan validasi untuk file siswa yang ada
+            'existing_student_files' => 'nullable|array', // Validasi file siswa yang ada
         ]);
-
-        // Menyimpan atau memperbarui file modul guru
-        if ($request->hasFile('file')) {
-            // Hapus file lama jika ada
-            if ($module->file && Storage::disk('public')->exists($module->file)) {
-                Storage::disk('public')->delete($module->file);
-            }
-
-            // Simpan file baru dengan nama asli
-            $file = $request->file('file');
-            $filePath = $file->storeAs('modules_files', $file->getClientOriginalName(), 'public');
-            $module->file = $filePath;
-        }
 
         // Mengelola file siswa lama dan baru
         $existingStudentFiles = $module->student_files ?? [];
@@ -167,49 +135,41 @@ class ModuleController extends Controller
             }
         }
 
-        // Periksa dan hapus file yang dihapus oleh pengguna
+        // Periksa dan hapus file yang tidak dipertahankan
         $finalStudentFiles = [];
         $finalStudentFilesTitles = [];
 
         foreach ($existingStudentFiles as $index => $existingFile) {
-            // Jika file tetap dipertahankan oleh pengguna
             if (in_array($existingFile, $existingStudentFilesInput)) {
                 $finalStudentFiles[] = $existingFile;
-
-                // Pastikan indeks $index ada di $studentFilesTitles sebelum mengaksesnya
-                if (isset($studentFilesTitles[$index])) {
-                    $finalStudentFilesTitles[] = $studentFilesTitles[$index];
-                } else {
-                    // Jika tidak ada judul yang sesuai, tambahkan judul kosong atau sesuai kebutuhan
-                    $finalStudentFilesTitles[] = '';
-                }
+                $finalStudentFilesTitles[] = $studentFilesTitles[$index] ?? '';
             } else {
-                // Hapus file yang tidak dipertahankan
                 if (Storage::disk('public')->exists($existingFile)) {
                     Storage::disk('public')->delete($existingFile);
                 }
             }
         }
 
-        // Gabungkan file lama yang dipertahankan dengan file baru
+        // Gabungkan file lama dan baru
         $finalStudentFiles = array_merge($finalStudentFiles, $newStudentFiles);
-        $finalStudentFilesTitles = array_merge($finalStudentFilesTitles, array_slice($studentFilesTitles, count($finalStudentFilesTitles)));
+        $finalStudentFilesTitles = array_merge(
+            $finalStudentFilesTitles,
+            array_slice($studentFilesTitles, count($finalStudentFilesTitles))
+        );
 
-        // Update module data
-        $module->student_files = $finalStudentFiles;
-        $module->student_files_titles = $finalStudentFilesTitles;
-
-        // Menyimpan atau memperbarui link
-        $module->links = $request->input('links', []);
-
-        // Menyimpan atau memperbarui video
-        $module->videos = $request->input('videos', []);
-
-        // Simpan perubahan ke database
-        $module->save();
+        // Perbarui data modul menggunakan metode update()
+        $module->update([
+            'title' => $validatedData['title'],
+            'links' => $request->input('links', []),
+            'videos' => $request->input('videos', []),
+            'student_files' => $finalStudentFiles,
+            'student_files_titles' => $finalStudentFilesTitles,
+        ]);
 
         // Redirect kembali ke halaman detail pembelajaran
-        return redirect()->route('learnings.show', $module->learnings_id)->with('success', 'Data pembelajaran berhasil diperbarui.');
+        return redirect()
+            ->route('learnings.show', $module->learning_id)
+            ->with('success', 'Data pembelajaran berhasil diperbarui.');
     }
 
     /**
@@ -218,7 +178,7 @@ class ModuleController extends Controller
      * @param \App\Models\Module $module
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Module $module)
+    public function destroy($learning_id, Module $module)
     {
         // Hapus file modul utama jika ada
         if ($module->file && Storage::disk('public')->exists($module->file)) {
@@ -242,6 +202,6 @@ class ModuleController extends Controller
         }
 
         // Redirect atau tampilkan pesan sukses
-        return redirect()->route('learnings.index')->with('success', 'Data modul berhasil dihapus.');
+        return redirect()->route('learnings.show', ['learning' => $learning_id])->with('success', 'Data modul berhasil dihapus.');
     }
 }

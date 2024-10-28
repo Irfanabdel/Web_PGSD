@@ -9,29 +9,39 @@ class Module extends Model
 {
     use HasFactory;
 
+    // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'learnings_id', // ID dari Learning
-        'file', // Nama file yang diunggah
-        'links', // Array links
-        'videos', // Array videos
-        'student_files', // Array file pembelajaran siswa
-        'student_files_titles', // Array judul file pembelajaran siswa
+        'learning_id', // Foreign key yang benar untuk relasi dengan Learning
+        'title', // Judul modul
+        'links', // Array link
+        'videos', // Array video
+        'student_files', // Array file siswa
+        'student_files_titles', // Array judul file siswa
     ];
 
+    // Cast atribut JSON menjadi array secara otomatis
     protected $casts = [
         'links' => 'array',
         'videos' => 'array',
-        'student_files' => 'array', // Cast untuk file pembelajaran siswa sebagai array
-        'student_files_titles' => 'array', // Cast untuk judul file pembelajaran siswa sebagai array
+        'student_files' => 'array', 
+        'student_files_titles' => 'array',
     ];
 
     /**
-     * Mendapatkan pembelajaran yang memiliki modul ini.
+     * Relasi dengan model Learning.
+     * Satu modul milik satu sesi pembelajaran.
      */
     public function learning()
     {
-        return $this->belongsTo(Learning::class, 'learnings_id');
+        return $this->belongsTo(Learning::class, 'learning_id');
+    }
+
+    /**
+     * Relasi dengan model Evaluation.
+     * Satu modul dapat memiliki banyak evaluasi.
+     */
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class, 'module_id');
     }
 }
-
-

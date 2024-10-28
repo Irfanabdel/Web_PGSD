@@ -37,20 +37,21 @@ class Learning extends Model
     {
         return $this->belongsTo(Theme::class);
     }
+
     // Definisikan relasi ke model Module
     public function modules()
     {
-        return $this->hasMany(Module::class, 'learnings_id');
+        return $this->hasMany(Module::class, 'learning_id');
     }
+
     // Misalnya, jika relasi ke User adalah seperti ini:
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Definisikan relasi ke model Evaluasi
     public function evaluations()
     {
-        return $this->hasMany(Evaluation::class, 'learning_id');
+        return $this->hasMany(Evaluation::class);
     }
 }

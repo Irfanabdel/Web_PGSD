@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('evaluations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('learning_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->id(); // Kolom ID untuk tabel evaluations
+            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade'); // Menghubungkan ke tabel activities
+            $table->string('title'); // Kolom untuk judul evaluasi
+            $table->text('description')->nullable(); // Kolom untuk deskripsi evaluasi
             $table->dateTime('start_datetime')->nullable(); // Kolom untuk tanggal dan waktu mulai
-            $table->dateTime('end_datetime')->nullable();   // Kolom untuk tanggal dan waktu berakhir
-            $table->timestamps();
+            $table->dateTime('end_datetime')->nullable(); // Kolom untuk tanggal dan waktu berakhir
+            $table->timestamps(); // Kolom created_at dan updated_at
         });
     }
 
