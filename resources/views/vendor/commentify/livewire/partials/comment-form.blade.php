@@ -3,7 +3,7 @@
     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
         <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
             role="alert">
-            <span class="font-medium">Success!</span> {{session('message')}}
+            <span class="font-medium">Berhasil!</span> {{session('message')}}
         </div>
     </div>
     @endif

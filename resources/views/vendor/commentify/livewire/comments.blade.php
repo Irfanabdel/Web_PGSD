@@ -12,7 +12,7 @@
                     'state'=>'newCommentState',
                     'inputId'=> 'comment',
                     'inputLabel'=> 'Your comment',
-                    'button'=>'Post comment'
+                    'button'=>'Kirim Komentar'
                 ])
             @else
                 <a class="mt-2 text-sm" href="/login">Log in to comment!</a>

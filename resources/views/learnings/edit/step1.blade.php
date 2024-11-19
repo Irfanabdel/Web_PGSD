@@ -84,7 +84,7 @@
 
                 <!-- Tombol Submit -->
                 <div class="flex justify-end">
-                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan Perubahan</button>
+                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Perbaharui</button>
                 </div>
             </form>
         </div>

@@ -90,7 +90,7 @@
                 @if (auth()->user()->role === 'guru')
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('learnings.create.step2', ['learning' => $learning->id]) }}"
-                        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center">
                         Tambah Aktivitas
                     </a>
                 </div>
@@ -203,7 +203,7 @@
                     @if (auth()->user()->role === 'guru')
                     <div class="flex justify-end mb-4">
                         <a href="{{ route('learnings.create.step3', ['learning' => $learning->id, 'module' => $module->id]) }}"
-                            class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center">
                             Tambah Evaluasi
                         </a>
                     </div>

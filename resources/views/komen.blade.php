@@ -6,19 +6,19 @@
         <form action="{{ route('komen.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6 mb-8 border border-gray-200">
             @csrf
             <div class="mb-4">
-                <label for="title" class="block text-sm font-medium text-gray-700">Judul:</label>
+                <label for="title" class="block text-sm font-medium text-gray-700">Judul :</label>
                 <input type="text" id="title" name="title" class="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" />
             </div>
             <div class="mb-4">
-                <label for="Desc" class="block text-sm font-medium text-gray-700">Deskripsi:</label>
+                <label for="Desc" class="block text-sm font-medium text-gray-700">Deskripsi :</label>
                 <textarea id="Desc" name="Desc" rows="4" class="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5"></textarea>
             </div>
             <div class="mb-4">
-                <label for="image" class="block text-sm font-medium text-gray-700">Gambar:</label>
+                <label for="image" class="block text-sm font-medium text-gray-700">Gambar :</label>
                 <input type="file" id="image" name="image" class="mt-1 block w-full text-gray-900 border border-white rounded-lg" />
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700">Submit</button>
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700">Kirim</button>
             </div>
         </form>
 

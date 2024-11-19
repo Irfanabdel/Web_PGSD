@@ -92,15 +92,6 @@
             @if(Auth::user()->role == 'guru')
             <!-- Teacher Links -->
             <li>
-                <a href="{{ route('grades.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('grades*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
-                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 0a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h1zM4 0h8a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1z" />
-                    </svg>
-                    <span class="ms-4 font-semibold">Asesmen</span>
-                </a>
-            </li>
-
-            <li>
                 <a href="{{ route('themes.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('themes*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
@@ -118,8 +109,35 @@
                 </a>
             </li>
 
-            @else
+            <li>
+                <a href="{{ route('learnings.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('learnings*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
+                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 2C10.897 2 10 2.897 10 4v16c0 1.103.897 2 2 2h10V4c0-1.103-.897-2-2-2H12zm0 2h8v14h-8V4zm-2 0v14H4V4h6zm0 16H4c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h6c1.103 0 2 .897 2 2v16z" />
+                    </svg>
+                    <span class="ms-4 font-semibold">Pembelajaran</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('grades.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('grades*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
+                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 0a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h1zM4 0h8a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1z" />
+                    </svg>
+                    <span class="ms-4 font-semibold">Asesmen</span>
+                </a>
+            </li>
+
+            @else (Auth::user()->role == 'siswa')
             <!-- Student Links -->
+            <li>
+                <a href="{{ route('learnings.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('learnings*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
+                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 2C10.897 2 10 2.897 10 4v16c0 1.103.897 2 2 2h10V4c0-1.103-.897-2-2-2H12zm0 2h8v14h-8V4zm-2 0v14H4V4h6zm0 16H4c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h6c1.103 0 2 .897 2 2v16z" />
+                    </svg>
+                    <span class="ms-4 font-semibold">Pembelajaran</span>
+                </a>
+            </li>
+            
             <li>
                 <a href="{{ route('grades.chart') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('grades*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
@@ -133,15 +151,6 @@
 
             <!-- Discussion Room Link -->
             @auth
-            <li>
-                <a href="{{ route('learnings.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('learnings*') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
-                    <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12 2C10.897 2 10 2.897 10 4v16c0 1.103.897 2 2 2h10V4c0-1.103-.897-2-2-2H12zm0 2h8v14h-8V4zm-2 0v14H4V4h6zm0 16H4c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h6c1.103 0 2 .897 2 2v16z" />
-                    </svg>
-                    <span class="ms-4 font-semibold">Pembelajaran</span>
-                </a>
-            </li>
-
             <li>
                 <a href="{{ route('komen.index') }}" class="flex items-center p-3 rounded-lg transition-colors duration-300 ease-in-out group {{ request()->is('diskusi') ? 'bg-red-500 text-white' : 'text-gray-900 hover:bg-red-500 hover:text-white' }}">
                     <svg class="w-6 h-6 transition-colors duration-300 ease-in-out group-hover:text-white" fill="currentColor" viewBox="0 0 16 16">
