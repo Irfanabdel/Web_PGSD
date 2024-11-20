@@ -42,7 +42,7 @@ class TeacherController extends Controller
         $validatedData = $request->validate([
             'theme_id' => 'required|exists:themes,id',
             'user_kelas' => 'required|string',
-            'description' => 'required|string',
+            'description' => 'required|string|max:525',
             'files' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx', // Validasi satu file saja
         ]);
 

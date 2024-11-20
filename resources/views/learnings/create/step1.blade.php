@@ -63,18 +63,9 @@
                     </ul>
                 </div>
 
-                <!-- Input Elemen -->
-                <div class="mb-4">
-                    <label for="element" class="block mb-2 text-sm font-medium text-gray-900">Elemen</label>
-                    <input type="text" name="element" id="element" value="{{ old('element', $learningData['element'] ?? '') }}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
-                    @error('element')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Input Tujuan menggunakan TinyMCE -->
                 <div class="mb-4">
-                    <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Tujuan</label>
+                    <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Capaian Pembelajaran</label>
                     <textarea name="goals" id="goals" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>{{ old('goals', $learningData['goals'] ?? '') }}</textarea>
                     @error('goals')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
