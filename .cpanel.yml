@@ -2,8 +2,4 @@
 deployment:
 tasks:
 - export DEPLOYPATH=/home/usercpanel/public_html/git
-<<<<<<< HEAD
 - /bin/cp -r * $DEPLOYPATH
-=======
-- /bin/cp -r * $DEPLOYPATH
->>>>>>> 3393fb509775a2e40d6fb72ad722b4559f395709
