@@ -104,4 +104,11 @@
       </div>
     </div>
   </div>
+
+  <!-- Copyright -->
+  <footer class="p-4 bg-gray-200 text-center mt-8">
+    <p class="text-sm font-semibold text-gray-600">
+      &copy; {{ date('Y') }} E-Learning P5 Ileena Ramadhanti. Semua Hak Dilindungi.
+    </p>
+  </footer>
 </x-app-layout>
