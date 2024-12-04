@@ -65,14 +65,8 @@
                         <p>{{ str_replace('<br>', ', ', $learning->theme->dimensions_text ?? 'Dimensi Tidak Tersedia') }}</p>
                     </div>
 
-                    <!-- Menampilkan Elemen -->
                     <div class="text-base sm:text-lg">
-                        <p class="font-bold">Elemen:</p>
-                        <p>{{ $learning->element ?? 'Elemen Tidak Tersedia' }}</p>
-                    </div>
-
-                    <div class="text-base sm:text-lg">
-                        <p class="font-bold">Tujuan:</p>
+                        <p class="font-bold">Capaian Pembelajaran:</p>
                         <ol class="goals-list">
                             {!! $learning->goals ?? '<li>Tujuan Tidak Tersedia</li>' !!}
                         </ol>

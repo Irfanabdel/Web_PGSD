@@ -54,15 +54,6 @@
                     </ul>
                 </div>
 
-                <!-- Input Elemen -->
-                <div class="mb-6">
-                    <label for="element" class="block mb-2 text-sm font-medium text-gray-900">Elemen</label>
-                    <input type="text" name="element" id="element" value="{{ old('element', $learning->element) }}" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
-                    @error('element')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Input Tujuan -->
                 <div class="mb-6">
                     <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Tujuan</label>

@@ -17,7 +17,6 @@ class CreateLearningsTable extends Migration
             $table->id();
             $table->foreignId('theme_id')->constrained()->onDelete('cascade');
             $table->string('user_kelas');
-            $table->text('element');
             $table->text('goals');
             $table->string('cover_image')->nullable();
             $table->timestamps();

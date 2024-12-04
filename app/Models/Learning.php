@@ -16,7 +16,6 @@ class Learning extends Model
     protected $fillable = [
         'theme_id',
         'user_kelas',
-        'element',
         'goals',
         'cover_image',
     ];

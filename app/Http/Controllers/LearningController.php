@@ -52,7 +52,6 @@ class LearningController extends Controller
         $validatedData = $request->validate([
             'theme_id' => 'required|exists:themes,id',
             'user_kelas' => 'required|string',
-            'element' => 'required|string',
             'goals' => 'required|string',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg', // 5 MB maksimal
         ]);
@@ -146,7 +145,6 @@ class LearningController extends Controller
         $request->validate([
             'theme_id' => 'required|exists:themes,id',
             'user_kelas' => 'required|string',
-            'element' => 'required|string',
             'goals' => 'required|string',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg', // Maksimal 5 MB
         ]);
@@ -165,7 +163,6 @@ class LearningController extends Controller
         $learning->update([
             'theme_id' => $request->theme_id,
             'user_kelas' => $request->user_kelas,
-            'element' => $request->element,
             'goals' => $request->goals,
             'cover_image' => $learning->cover_image,
         ]);
