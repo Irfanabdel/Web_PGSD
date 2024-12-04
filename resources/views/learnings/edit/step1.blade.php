@@ -56,7 +56,7 @@
 
                 <!-- Input Tujuan -->
                 <div class="mb-6">
-                    <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Tujuan</label>
+                    <label for="goals" class="block mb-2 text-sm font-medium text-gray-900">Capaian Pembelajaran</label>
                     <textarea name="goals" id="goals" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>{{ old('goals', $learning->goals) }}</textarea>
                     @error('goals')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -113,7 +113,7 @@
             tinymce.init({
                 selector: '#goals',
                 plugins: 'lists link image',
-                toolbar: 'undo redo | bold italic underline | bullist numlist',
+                toolbar: 'undo redo | bold italic underline | bullist numlist | link image',
                 menubar: false,
                 branding: false,
                 height: 300,

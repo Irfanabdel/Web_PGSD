@@ -111,4 +111,8 @@
       &copy; {{ date('Y') }} E-Learning P5 Ileena Ramadhanti. Semua Hak Dilindungi.
     </p>
   </footer>
+<<<<<<< HEAD
 </x-app-layout>
+=======
+</x-app-layout>
+>>>>>>> d35f0ed52beb3759733dcea8c823283b821ac99f
