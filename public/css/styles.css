@@ -185,3 +185,41 @@
 .evaluation-description a:hover {
   text-decoration: underline; /* Menambahkan garis bawah pada hover */
 }
+
+/* Styling untuk link */
+.list-disc a {
+  word-wrap: break-word; /* Membungkus kata panjang */
+  overflow-wrap: anywhere; /* Bungkus jika ada karakter panjang */
+  text-overflow: ellipsis; /* Tambahkan "..." jika terlalu panjang */
+  white-space: normal; /* Izinkan teks membungkus */
+}
+
+/* Responsivitas untuk tampilan kecil */
+@media (max-width: 640px) {
+  .list-disc a {
+      font-size: 0.875rem; /* Ukuran font lebih kecil */
+  }
+}
+
+/* Styling untuk iframe video */
+.video-thumbnail {
+  max-width: 100%; /* Pastikan video tidak melebihi lebar kontainer */
+  height: auto; /* Sesuaikan tinggi proporsional */
+  border-radius: 8px; /* Tambahkan efek rounded */
+}
+
+/* CSS untuk menjaga aspek rasio video */
+.aspect-w-16.aspect-h-9 {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Rasio 16:9 */
+}
+
+.aspect-w-16.aspect-h-9 iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+

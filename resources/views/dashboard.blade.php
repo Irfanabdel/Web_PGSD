@@ -14,7 +14,7 @@
       <a href="{{ route('learnings.index') }}" class="w-1/6 max-w-xs p-2 bg-blue-200 border border-blue-300 rounded-lg shadow-lg text-center hover-effect">
         <i class="fas fa-lightbulb text-2xl mb-1 text-blue-600"></i>
         <h3 class="text-lg font-bold mb-1">{{ $jumlahLearnings }}</h3>
-        <p class="text-sm font-semibold">Pembelajaran</p>
+        <p class="text-sm font-semibold">Studi</p>
       </a>
 
       <div class="w-1/6 max-w-xs p-2 bg-blue-200 border border-blue-300 rounded-lg shadow-lg text-center">
@@ -111,8 +111,4 @@
       &copy; {{ date('Y') }} E-Learning P5 Ileena Ramadhanti. Semua Hak Dilindungi.
     </p>
   </footer>
-<<<<<<< HEAD
 </x-app-layout>
-=======
-</x-app-layout>
->>>>>>> d35f0ed52beb3759733dcea8c823283b821ac99f

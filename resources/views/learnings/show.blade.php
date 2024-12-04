@@ -136,30 +136,14 @@
 
                 <!-- Konten informasi modul yang dapat ditampilkan/ditutup -->
                 <div id="info-content-module-{{ $module->id }}" class="space-y-4">
-                    <!-- Menampilkan Student Files -->
-                    @if (count($module->student_files) > 0)
-                    <p class="font-bold mt-2">File Pembelajaran Siswa:</p>
-                    <ul class="list-disc list-inside">
-                        @foreach ($module->student_files as $index => $studentFile)
-                        <li>
-                            <a href="{{ Storage::url($studentFile) }}" class="text-blue-600 hover:underline" target="_blank">
-                                <img src="{{ asset('image/file.png') }}" alt="File Icon" class="inline-block w-8 sm:w-12 h-8 sm:h-12 mr-2">
-                                {{ $module->student_files_titles[$index] ?? 'Judul Tidak Tersedia' }}
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                    @else
-                    <p class="font-bold mt-2">File Pembelajaran Siswa:</p>
-                    <p>Tidak Ada File Pembelajaran Siswa</p>
-                    @endif
-
                     <!-- Menampilkan Links -->
                     @if (count($module->links) > 0)
                     <p class="font-bold mt-2">Links Pembelajaran:</p>
                     <ul class="list-disc list-inside">
                         @foreach ($module->links as $link)
-                        <li><a href="{{ $link }}" class="text-blue-600 hover:underline" target="_blank">{{ $link }}</a></li>
+                        <li>
+                            <a href="{{ $link }}" class="text-blue-600 hover:underline break-words" target="_blank">{{ $link }}</a>
+                        </li>
                         @endforeach
                     </ul>
                     @else
@@ -167,20 +151,40 @@
                     <p>Tidak Ada Links</p>
                     @endif
 
-                    <!-- Menampilkan Videos -->
                     @if (count($module->videos) > 0)
                     <p class="font-bold mt-2">Youtube:</p>
                     <ul class="list-disc list-inside">
                         @foreach ($module->videos as $video)
-                        <li class="mb-4">
-                            <a href="{{ $video }}" class="text-blue-600 hover:underline" target="_blank">{{ $video }}</a>
-                            <iframe class="video-thumbnail mt-2 w-full sm:w-64 h-40 sm:h-48" id="video-{{ $loop->index }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <li class="mb-6">
+                            <!-- Link ke Video -->
+                            <a href="{{ $video }}" class="text-blue-600 hover:underline break-words" target="_blank">{{ $video }}</a>
+
+                            <!-- Iframe Video -->
+                            <div class="aspect-w-16 aspect-h-9 mt-4">
+                                <iframe
+                                    class="rounded-lg shadow-lg"
+                                    id="video-{{ $loop->index }}"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+
+                            <!-- Script untuk Memuat Video -->
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     var videoUrl = "{{ $video }}";
                                     var videoId = extractVideoId(videoUrl);
-                                    document.getElementById('video-{{ $loop->index }}').src = "https://www.youtube.com/embed/" + videoId;
+                                    if (videoId) {
+                                        document.getElementById('video-{{ $loop->index }}').src = "https://www.youtube.com/embed/" + videoId;
+                                    }
                                 });
+
+                                function extractVideoId(url) {
+                                    const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|embed)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                                    const match = url.match(regex);
+                                    return match ? match[1] : null;
+                                }
                             </script>
                         </li>
                         @endforeach
@@ -189,6 +193,7 @@
                     <p class="font-bold mt-2">Videos:</p>
                     <p>Tidak Ada Videos</p>
                     @endif
+
 
                     <!-- Garis Pemisah -->
                     <hr class="border-t border-gray-300 my-6">
@@ -350,13 +355,6 @@
 
             content.classList.toggle('hidden');
             icon.classList.toggle('rotate-180');
-        }
-
-        // Extracts the video ID from the YouTube URL
-        function extractVideoId(url) {
-            const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|v\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : '';
         }
 
         function confirmDelete(event) {
