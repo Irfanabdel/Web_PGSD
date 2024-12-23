@@ -11,7 +11,7 @@
 
         <!-- Role -->
         <div class="mb-4">
-            <x-input-label for="role" :value="__('Role')" />
+            <x-input-label for="role" :value="__('Peran')" />
             <select name="role" id="role" class="block w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 p-2.5" onchange="toggleAdditionalFields()">
                 <option value="siswa">Siswa</option>
                 <option value="guru">Guru</option>

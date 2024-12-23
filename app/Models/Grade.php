@@ -15,6 +15,8 @@ class Grade extends Model
         'user_id',
         'theme_id',
         'assessments',
+        'comments_1',
+        'comments_2',
     ];
 
     protected $casts = [

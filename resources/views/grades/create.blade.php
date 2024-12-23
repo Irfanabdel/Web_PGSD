@@ -65,14 +65,25 @@
 
                 <!-- Proyek 1 -->
                 <div class="mb-6">
-                    <label for="project1" class="block mb-2 text-sm font-medium text-gray-900">Projek 1</label>
-                    <div id="project1" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">-</div>
+                    <label for="project1" class="inline-block mb-2 text-sm font-medium text-gray-900">Projek 1 :</label>
+                    <span id="project1" class="text-gray-900 text-sm ml-2">-</span>
+                </div>
+
+
+                <!-- Comments 1 -->
+                <div class="mb-6">
+                    <textarea name="comments_1" id="comments_1" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Masukkan komentar untuk projek 1"></textarea>
                 </div>
 
                 <!-- Proyek 2 -->
                 <div class="mb-6">
-                    <label for="project2" class="block mb-2 text-sm font-medium text-gray-900">Projek 2</label>
-                    <div id="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">-</div>
+                    <label for="project2" class="inline-block mb-2 text-sm font-medium text-gray-900">Projek 2 :</label>
+                    <span id="project2" class="text-gray-900 text-sm ml-2">-</span>
+                </div>
+
+                <!-- Comments 2 -->
+                <div class="mb-6">
+                    <textarea name="comments_2" id="comments_2" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Masukkan komentar untuk projek 2"></textarea>
                 </div>
 
                 <div class="flex justify-end">
@@ -92,68 +103,47 @@
             const userSelect = document.getElementById('user_id');
             const dimensionsTbody = document.getElementById('dimensions-tbody');
 
-            // Event listener untuk saat siswa dipilih
             userSelect.addEventListener('change', function() {
                 const selectedOption = userSelect.options[userSelect.selectedIndex];
                 const schoolName = selectedOption.getAttribute('data-school-name') || '';
                 const kelas = selectedOption.getAttribute('data-kelas') || '';
-
                 schoolNameDiv.textContent = schoolName;
                 kelasDiv.textContent = kelas;
             });
 
-            // Event listener untuk saat tema dipilih
             themeSelect.addEventListener('change', function() {
                 const selectedOption = themeSelect.options[themeSelect.selectedIndex];
                 const project1 = selectedOption.getAttribute('data-project1') || '';
                 const project2 = selectedOption.getAttribute('data-project2') || '';
                 const dimensionsText = selectedOption.getAttribute('data-dimensions') || '';
-
                 project1Div.textContent = project1;
                 project2Div.textContent = project2;
-                updateDimensionsTable(dimensionsText); // Update table with dimensions
+                updateDimensionsTable(dimensionsText);
             });
 
             function updateDimensionsTable(dimensionsText) {
-                dimensionsTbody.innerHTML = ''; // Clear existing rows
-                const dimensions = dimensionsText.split("<br>").filter(dimension => dimension.trim() !== ''); // Split and filter out empty dimensions
-
+                dimensionsTbody.innerHTML = '';
+                const dimensions = dimensionsText.split("<br>").filter(dimension => dimension.trim() !== '');
                 dimensions.forEach(dimension => {
-                    // Assuming dimension is separated by '|' if multiple entries in one line
-                    const dimensionEntries = dimension.split(',').map(d => d.trim()).filter(d => d !== ''); // Split and trim dimension entries
+                    const row = dimensionsTbody.insertRow();
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    const cell3 = row.insertCell(2);
 
-                    dimensionEntries.forEach(dimension => {
-                        const row = dimensionsTbody.insertRow();
-                        const cell1 = row.insertCell(0);
-                        const cell2 = row.insertCell(1);
-                        const cell3 = row.insertCell(2);
-
-                        cell1.innerHTML = `
-                            <div class="bg-transparent border-0 text-gray-900 text-sm rounded-lg w-full p-2.5">
-                             ${dimension}
-                            </div>
-                        `;
-
-                        // Provide default values if necessary
-                        const defaultAssessment = ""; // Example default value
-
-                        cell2.innerHTML = `
+                    cell1.innerHTML = `<div class="bg-transparent border-0 text-gray-900 text-sm rounded-lg w-full p-2.5">${dimension}</div>`;
+                    cell2.innerHTML = `
                         <select name="assessments[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" required>
                             <option value="" disabled selected>Pilih Asesmen</option>
                             <option value="1">BB</option>
                             <option value="2">MB</option>
                             <option value="3">BSH</option>
                             <option value="4">SB</option>
-                        </select>
-                        `;
-
-                        cell3.classList.add('text-center');
-                        cell3.innerHTML = `
-                <button type="button" onclick="removeDimensionRow(this)" class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            `;
-                    });
+                        </select>`;
+                    cell3.classList.add('text-center');
+                    cell3.innerHTML = `
+                        <button type="button" onclick="removeDimensionRow(this)" class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 text-center">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>`;
                 });
             }
 

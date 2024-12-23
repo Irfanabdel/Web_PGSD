@@ -85,17 +85,23 @@ class GradeController extends Controller
             'theme_id' => 'required|exists:themes,id',
             'assessments' => 'required|array',
             'assessments.*' => 'required|in:1,2,3,4', // Validasi sesuai dengan format yang diharapkan
+            'comments_1' => 'nullable|string|max:255',
+            'comments_2' => 'nullable|string|max:255',
         ]);
 
         $user_id = $request->input('user_id');
         $theme_id = $request->input('theme_id');
         $assessments = $request->input('assessments');
+        $comments_1 = $request->input('comments_1');
+        $comments_2 = $request->input('comments_2');
 
         // Simpan data nilai
         $grade = new Grade([
             'user_id' => $user_id,
             'theme_id' => $theme_id,
             'assessments' => json_encode($assessments), // Simpan sebagai JSON string
+            'comments_1' => $comments_1,
+            'comments_2' => $comments_2,
         ]);
 
         $grade->save();
@@ -118,11 +124,15 @@ class GradeController extends Controller
             'theme_id' => 'required|exists:themes,id',
             'assessments' => 'required|array',
             'assessments.*' => 'required|in:1,2,3,4', // Validasi sesuai dengan format yang diharapkan
+            'comments_1' => 'nullable|string|max:255',
+            'comments_2' => 'nullable|string|max:255',
         ]);
-
+        // Update data grade
         $grade->user_id = $request->input('user_id');
         $grade->theme_id = $request->input('theme_id');
         $grade->assessments = json_encode($request->input('assessments'));
+        $grade->comments_1 = $request->input('comments_1'); // Update comments_1
+        $grade->comments_2 = $request->input('comments_2'); // Update comments_2
 
         $grade->save();
 

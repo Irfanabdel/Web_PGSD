@@ -61,16 +61,30 @@
                 </div>
 
                 <!-- Proyek 1 -->
-                <div class="mb-6">
-                    <label for="project1" class="block mb-2 text-sm font-medium text-gray-900 mb-2">Projek 1</label>
-                    <input type="text" id="project1" name="project1" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
+                <div class="mb-6 flex items-center">
+                    <label for="project1" class="w-1/4 text-sm font-medium text-gray-900">Projek 1</label>
+                    <input type="text" id="project1" name="project1" class="w-3/4 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block p-2.5" readonly>
                 </div>
 
                 <!-- Proyek 2 -->
-                <div class="mb-6">
-                    <label for="project2" class="block mb-2 text-sm font-medium text-gray-900 mb-2">Projek 2</label>
-                    <input type="text" id="project2" name="project2" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" readonly>
+                <div class="mb-6 flex items-center">
+                    <label for="project2" class="w-1/4 text-sm font-medium text-gray-900">Projek 2</label>
+                    <input type="text" id="project2" name="project2" class="w-3/4 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block p-2.5" readonly>
                 </div>
+
+
+                <!-- Comments 1 -->
+                <div class="mb-6">
+                    <label for="comments_1" class="block text-sm font-medium text-gray-900 mb-2">Komentar Proyek 1</label>
+                    <textarea id="comments_1" name="comments_1" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Masukkan komentar untuk Proyek 1">{{ old('comments_1', $grade->comments_1) }}</textarea>
+                </div>
+
+                <!-- Comments 2 -->
+                <div class="mb-6">
+                    <label for="comments_2" class="block text-sm font-medium text-gray-900 mb-2">Komentar Proyek 2</label>
+                    <textarea id="comments_2" name="comments_2" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Masukkan komentar untuk Proyek 2">{{ old('comments_2', $grade->comments_2) }}</textarea>
+                </div>
+
 
                 <div class="flex justify-end">
                     <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Simpan</button>

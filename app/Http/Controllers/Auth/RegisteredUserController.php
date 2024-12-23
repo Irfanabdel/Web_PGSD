@@ -32,7 +32,15 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.[a-z]{2,}$/', // Validasi email untuk semua domain Gmail
+                'max:255',
+                'unique:' . User::class,
+            ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required|string',
             'kelas' => 'required_if:role,siswa|string|max:255',
@@ -56,7 +64,7 @@ class RegisteredUserController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         }
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

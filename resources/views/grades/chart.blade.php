@@ -31,7 +31,7 @@
             @endif
         </div>
 
-        <!-- Tampilkan tema, grafik, dan proyek -->
+        <!-- Tampilkan tema, grafik, komentar, dan proyek -->
         @if($data)
         @foreach($data as $themeTitle => $items)
         <div class="mb-8 p-4 bg-white rounded-lg shadow-md">
@@ -51,6 +51,12 @@
                 <div id="chart-{{ Str::slug($themeTitle, '-') }}-{{ $index }}" class="w-full h-96"></div>
             </div>
 
+            <!-- Tampilkan komentar -->
+            <div class="mb-4">
+                <p class="text-sm text-gray-600"><span class="font-bold">Komentar Projek 1</span>: {{ $item['comments_1'] }}</p>
+                <p class="text-sm text-gray-600"><span class="font-bold">Komentar Projek 2</span>: {{ $item['comments_2'] }}</p>
+            </div>
+
             <!-- Inisialisasi grafik dengan data -->
             @once
             <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -60,7 +66,6 @@
                     var categories = @json($item['dimensionLabels'] ?? []);
                     var seriesData = @json($item['assessmentData'] ?? []);
 
-                    // Cek jika data tidak kosong
                     if (categories && seriesData) {
                         var categoryMapping = {
                             'BB': 1,
@@ -78,54 +83,23 @@
                             chart: {
                                 type: 'line',
                                 height: '100%',
-                                zoom: {
-                                    enabled: true
-                                }
+                                zoom: { enabled: true }
                             },
-                            series: [{
-                                name: 'Asesmen',
-                                data: numericSeriesData
-                            }],
+                            series: [{ name: 'Asesmen', data: numericSeriesData }],
                             xaxis: {
                                 categories: categories,
-                                title: {
-                                    text: 'Dimensi',
-                                    style: {
-                                        fontSize: '14px',
-                                        fontWeight: 'bold',
-                                        color: '#000'
-                                    }
-                                },
+                                title: { text: 'Dimensi', style: { fontSize: '14px', fontWeight: 'bold', color: '#000' } },
                                 tickAmount: categories.length > 10 ? 10 : categories.length,
-                                labels: {
-                                    rotate: -45,
-                                    style: {
-                                        whiteSpace: 'normal',
-                                        wordBreak: 'break-word'
-                                    }
-                                }
+                                labels: { rotate: -45, style: { whiteSpace: 'normal', wordBreak: 'break-word' } }
                             },
                             yaxis: {
-                                title: {
-                                    text: 'Asesmen',
-                                    style: {
-                                        fontSize: '14px',
-                                        fontWeight: 'bold',
-                                        color: '#000'
-                                    }
-                                },
+                                title: { text: 'Asesmen', style: { fontSize: '14px', fontWeight: 'bold', color: '#000' } },
                                 min: 0,
                                 max: 4,
                                 tickAmount: 4,
                                 labels: {
                                     formatter: function(val) {
-                                        var labelMapping = {
-                                            1: 'BB',
-                                            2: 'MB',
-                                            3: 'BSH',
-                                            4: 'SB',
-                                            0: 'Unknown'
-                                        };
+                                        var labelMapping = { 1: 'BB', 2: 'MB', 3: 'BSH', 4: 'SB', 0: 'Unknown' };
                                         return labelMapping[val] || 'Unknown';
                                     }
                                 }
@@ -134,13 +108,7 @@
                             tooltip: {
                                 y: {
                                     formatter: function(val) {
-                                        var labelMapping = {
-                                            1: 'BB',
-                                            2: 'MB',
-                                            3: 'BSH',
-                                            4: 'SB',
-                                            0: 'Unknown'
-                                        };
+                                        var labelMapping = { 1: 'BB', 2: 'MB', 3: 'BSH', 4: 'SB', 0: 'Unknown' };
                                         return `${labelMapping[val] || 'Unknown'}`;
                                     }
                                 }
@@ -148,24 +116,12 @@
                             dataLabels: {
                                 enabled: true,
                                 formatter: function(val) {
-                                    var labelMapping = {
-                                        1: 'BB',
-                                        2: 'MB',
-                                        3: 'BSH',
-                                        4: 'SB',
-                                        0: 'Unknown'
-                                    };
+                                    var labelMapping = { 1: 'BB', 2: 'MB', 3: 'BSH', 4: 'SB', 0: 'Unknown' };
                                     return labelMapping[val] || 'Unknown';
                                 },
-                                style: {
-                                    fontSize: '12px',
-                                    colors: ['#000']
-                                }
+                                style: { fontSize: '12px', colors: ['#000'] }
                             },
-                            stroke: {
-                                curve: 'smooth',
-                                width: 2
-                            }
+                            stroke: { curve: 'smooth', width: 2 }
                         };
 
                         var chart = new ApexCharts(document.querySelector("#chart-{{ Str::slug($themeTitle, '-') }}-{{ $index }}"), options);
@@ -174,6 +130,12 @@
                 });
             </script>
             @endforeach
+
+            <!-- Tampilkan proyek di bagian bawah -->
+            <div class="mt-6">
+                <p class="text-sm text-gray-600"><span class="font-bold">Proyek 1</span>: {{ $items[0]['project1'] }}</p>
+                <p class="text-sm text-gray-600"><span class="font-bold">Proyek 2</span>: {{ $items[0]['project2'] }}</p>
+            </div>
         </div>
         @endforeach
         @else

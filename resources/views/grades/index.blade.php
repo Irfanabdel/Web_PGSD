@@ -80,6 +80,8 @@
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Nama Siswa</th>
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Nama Sekolah</th>
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Kelas</th>
+                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Komentar Projek 1</th>
+                            <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Komentar Projek 2</th>
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Dimensi</th>
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Asesmen</th>
                             <th scope="col" class="p-3 text-xs font-medium text-center text-white uppercase">Aksi</th>
@@ -97,6 +99,8 @@
                             <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">{{ $grade->user->name }}</td>
                             <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">{{ $grade->user->school_name }}</td>
                             <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">{{ $grade->user->kelas }}</td>
+                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">{{ $grade->comments_1 }}</td>
+                            <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">{{ $grade->comments_2 }}</td>
                             <td class="p-3 text-sm font-normal text-gray-800 whitespace-nowrap text-center border-r border-gray-200">
                                 {!! $theme->dimensions_text !!}
                             </td>
@@ -131,9 +135,17 @@
 
                 <!-- Display Project 1 and 2 below the table -->
                 <div class="mt-4 p-4 rounded-lg">
-                    <p class="text-sm text-gray-700"><strong>Proyek 1 :</strong> {{ $theme->project1 }}</p>
-                    <p class="text-sm text-gray-700"><strong>Proyek 2 :</strong> {{ $theme->project2 }}</p>
+                    <!-- Proyek 1 -->
+                    <p class="text-sm text-gray-700">
+                        <strong>Proyek 1 :</strong> {{ $theme->project1 }}
+                    </p>
+
+                    <!-- Proyek 2 -->
+                    <p class="text-sm text-gray-700 mt-4">
+                        <strong>Proyek 2 :</strong> {{ $theme->project2 }}
+                    </p>
                 </div>
+
             </div>
         </div>
         @endforeach

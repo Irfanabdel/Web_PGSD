@@ -52,6 +52,8 @@ class ChartController extends Controller
                 'assessmentData' => $assessmentData,
                 'project1' => $theme->project1,
                 'project2' => $theme->project2,
+                'comments_1' => $grade->comments_1, // Tambahkan comments_1
+                'comments_2' => $grade->comments_2, // Tambahkan comments_2
             ];
         }
 
